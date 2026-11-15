@@ -1,0 +1,6 @@
+[
+  { "name": "大正", "fromYear": 1912, "fromSeason": "summer" },
+  { "name": "昭和", "fromYear": 1927, "fromSeason": "spring" },
+  { "name": "平成", "fromYear": 1989, "fromSeason": "spring" },
+  { "name": "令和", "fromYear": 2019, "fromSeason": "summer" }
+]

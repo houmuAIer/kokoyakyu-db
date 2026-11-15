@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>高校野球 戦績DB</title>
+<meta name="description" content="春夏の全国大会出場校の勝敗戦績を、学校・都道府県・地区・登場順などで集計できる非公式データベース">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<header class="masthead">
+  <h1>高校野球 戦績DB</h1>
+  <p>春夏の全国大会の勝ち負けを、学校・都道府県・地区・登場順で数えます。</p>
+</header>
+
+<section class="sheet-head" aria-label="絞り込み">
+  <div class="field">
+    <span class="field-name">大会</span>
+    <div class="marks" id="seasons" role="group" aria-label="大会">
+      <button data-v="both">春夏</button><button data-v="spring">春</button><button data-v="summer">夏</button>
+    </div>
+  </div>
+  <div class="field field-wide">
+    <span class="field-name">期間</span>
+    <div class="marks" id="period" role="group" aria-label="期間"></div>
+    <div class="recent" id="recent-box" hidden>
+      <label for="recent-n">直近</label>
+      <input type="range" id="recent-n" min="1" step="1">
+      <output id="recent-out"></output><span>年</span>
+    </div>
+    <span class="period-note" id="period-note"></span>
+  </div>
+</section>
+
+<nav class="tabs" id="tabs" role="tablist" aria-label="表示">
+  <button role="tab" data-tab="ranking">ランキング</button>
+  <button role="tab" data-tab="h2h">対戦成績</button>
+  <button role="tab" data-tab="school">学校</button>
+  <button role="tab" data-tab="debut">登場順（夏）</button>
+</nav>
+
+<main id="view"></main>
+
+<footer class="colophon">
+  <p>勝敗には引き分け・不戦勝・辞退・交流試合を含めません。ベスト8などの到達成績は、不戦勝で勝ち上がった場合も含めます。</p>
+  <p>試合結果は、Wikipedia日本語版の各大会の記事をもとに作成しています。全大会でトーナメントとしての整合性を機械的に確かめ、2021年以降は別の資料とも照合しています。</p>
+  <p>個人が運営する非公式のデータベースで、大会主催者・関係団体とは関係ありません。</p>
+</footer>
+
+<script type="module" src="./app.js"></script>
+</body>
+</html>

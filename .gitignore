@@ -1,0 +1,5 @@
+node_modules/
+public/data.json
+dist/
+# 取り込み元の Wikipedia 記事の原文（CC BY-SA）は公開リポジトリに含めない。npm run import で再取得できる
+raw/

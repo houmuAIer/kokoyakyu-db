@@ -1,0 +1,12 @@
+{
+  "name": "koshien-db",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "import": "node scripts/import-wikipedia.js",
+    "build:data": "node scripts/build-data.js",
+    "build": "node scripts/build-data.js && node scripts/build-site.js",
+    "preview": "node scripts/build-data.js && node scripts/build-site.js --preview",
+    "test": "node --test test/*.test.js"
+  }
+}

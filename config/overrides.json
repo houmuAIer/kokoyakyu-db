@@ -1,0 +1,221 @@
+{
+  "note": "Wikipediaの大会記事だけでは足りない・食い違う点の補正。各項目に根拠（source）を書く。",
+  "tournaments": {
+    "2007N": {
+      "addGames": [
+        {
+          "round": "R2",
+          "date": "2007-08-14",
+          "gameNo": 3,
+          "a": "佐賀北",
+          "b": "宇治山田商",
+          "scoreA": 4,
+          "scoreB": 4,
+          "winner": null,
+          "type": "draw",
+          "source": "Wikipedia「宇治山田商業対佐賀北延長15回引き分け再試合」：大会第7日目第3試合、延長15回4-4の引き分け。大会記事のトーナメント表には再試合（8月16日）のみ記載。"
+        }
+      ]
+    },
+    "2003S": {
+      "addGames": [
+        {
+          "round": "QF",
+          "date": "2003-03-31",
+          "gameNo": 4,
+          "a": "花咲徳栄",
+          "b": "東洋大姫路",
+          "scoreA": 2,
+          "scoreB": 2,
+          "winner": null,
+          "type": "draw",
+          "source": "大会記事の注釈：3月31日第4試合 2-2 延長15回引き分けによる再試合"
+        }
+      ]
+    },
+    "2006S": {
+      "addGames": [
+        {
+          "round": "R2",
+          "date": "2006-03-29",
+          "gameNo": 3,
+          "a": "関西",
+          "b": "早稲田実",
+          "scoreA": 7,
+          "scoreB": 7,
+          "winner": null,
+          "type": "draw",
+          "source": "大会記事の注釈：3月29日（第3試合） 7 - 7 延長15回・引き分けによる再試合"
+        }
+      ]
+    },
+    "2008S": {
+      "addGames": [
+        {
+          "round": "R3",
+          "date": "2008-03-28",
+          "gameNo": 3,
+          "a": "鹿児島工",
+          "b": "平安",
+          "scoreA": 3,
+          "scoreB": 3,
+          "winner": null,
+          "type": "draw",
+          "source": "大会記事の注釈：延長15回規定により3-3の引き分け。トーナメント表の日付欄「3月28日（3）・30日（1）」"
+        }
+      ],
+      "patchGames": [
+        {
+          "round": "R3",
+          "a": "鹿児島工",
+          "b": "平安",
+          "date": "2008-03-30",
+          "gameNo": 1,
+          "source": "同上（再試合は3月30日第1試合）"
+        }
+      ]
+    },
+    "2014S": {
+      "addGames": [
+        {
+          "round": "R2",
+          "date": "2014-03-29",
+          "gameNo": 2,
+          "a": "広島新庄",
+          "b": "桐生第一",
+          "scoreA": 1,
+          "scoreB": 1,
+          "winner": null,
+          "type": "draw",
+          "source": "大会記事の注釈：3月29日（第2試合） 1 - 1 延長15回・引き分けによる再試合"
+        }
+      ]
+    },
+    "2017S": {
+      "addGames": [
+        {
+          "round": "R2",
+          "date": "2017-03-26",
+          "gameNo": 2,
+          "a": "福岡大大濠",
+          "b": "滋賀学園",
+          "scoreA": 1,
+          "scoreB": 1,
+          "winner": null,
+          "type": "draw",
+          "source": "大会記事の注釈：3月26日（第2試合） 1 - 1 延長15回・引き分けによる再試合"
+        },
+        {
+          "round": "R2",
+          "date": "2017-03-26",
+          "gameNo": 3,
+          "a": "健大高崎",
+          "b": "福井工大福井",
+          "scoreA": 7,
+          "scoreB": 7,
+          "winner": null,
+          "type": "draw",
+          "source": "大会記事の注釈：3月26日（第3試合） 7 - 7 延長15回・引き分けによる再試合"
+        }
+      ]
+    },
+    "2025S": {
+      "nameAliases": {
+        "ニ松学舎大付": "二松学舎大付"
+      },
+      "source_nameAliases": "大会記事のトーナメント表の誤記（カタカナの「ニ」）。選出校表では「二松学舎大付」"
+    },
+    "1984S": {
+      "nameAliases": {
+        "明徳義塾": "明徳"
+      },
+      "source_nameAliases": "大会記事の注釈：大会期間中の4月1日から校名が「明徳」から「明徳義塾」に変更"
+    },
+    "1998N": {
+      "addGames": [
+        {
+          "round": "R1",
+          "date": "1998-08-07",
+          "gameNo": 2,
+          "a": "専大北上",
+          "b": "如水館",
+          "scoreA": 6,
+          "scoreB": 6,
+          "winner": null,
+          "type": "draw",
+          "source": "大会記事の注釈：8月7日（第2試合）6対6の7回裏2死で降雨コールドの引き分け、翌日再試合"
+        }
+      ]
+    },
+    "1991S": {
+      "addGames": [
+        {
+          "round": "R1",
+          "date": "1991-03-30",
+          "gameNo": 3,
+          "a": "三田学園",
+          "b": "広陵",
+          "scoreA": 3,
+          "scoreB": 3,
+          "winner": null,
+          "type": "draw",
+          "source": "大会記事の注釈：3月30日（第3試合）3 - 3、9回終了後・降雨引き分けによる再試合"
+        }
+      ]
+    },
+    "1947N": {
+      "schoolPrefectures": {
+        "京都市立西陣商業高等学校": "京都"
+      },
+      "source_schoolPrefectures": "京都市立の学校（記事名）",
+      "schoolIdByLabel": {
+        "慶応商工": "慶應義塾高等学校#慶応商工"
+      },
+      "source_schoolIdByLabel": "慶応商工は慶応（慶應義塾）とは別の学校。1947年春の大会では両校が出場しており、記事はどちらも慶應義塾高等学校にリンクしている"
+    },
+    "1955N": {
+      "schoolPrefectures": {
+        "岩手中学校・高等学校": "岩手"
+      },
+      "source_schoolPrefectures": "岩手県盛岡市の学校（Wikipedia「岩手中学校・高等学校」）"
+    },
+    "1962N": {
+      "schoolPrefectures": {
+        "山形市立商業高等学校": "山形"
+      },
+      "source_schoolPrefectures": "山形市立の学校（記事名）"
+    },
+    "1952S": {
+      "addGames": [
+        {
+          "round": "R2",
+          "date": "",
+          "gameNo": null,
+          "a": "鹿児島商",
+          "b": "海南",
+          "scoreA": 4,
+          "scoreB": 4,
+          "winner": null,
+          "type": "draw",
+          "source": "大会記事の注釈：4 - 4 延長11回・日没引き分けによる再試合（引き分けの日付・試合順は記事に記載なし）"
+        }
+      ]
+    },
+    "1989S": {
+      "addGames": [
+        {
+          "round": "R1",
+          "date": "1989-03-27",
+          "gameNo": 2,
+          "a": "近大付",
+          "b": "宇都宮工",
+          "scoreA": 10,
+          "scoreB": 10,
+          "winner": null,
+          "type": "draw",
+          "source": "大会記事の注釈：3月27日（第2試合） 10 - 10 延長11回・降雨引き分けによる再試合"
+        }
+      ]
+    }
+  }
+}
