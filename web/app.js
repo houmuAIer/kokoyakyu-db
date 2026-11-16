@@ -75,13 +75,15 @@ function gameRows(games, selfKeyFn) {
       : g.type === 'forfeit' ? (g.winner === s ? '<span class="subtle">不戦勝</span>' : '<span class="subtle">不戦敗・辞退</span>')
       : g.winner === s ? '<span class="win">○</span>' : '<span class="lose">●</span>';
     const score = ss === null ? '—' : `${ss} - ${os}`;
-    const sch = (id) => entryName(g.tournamentId, id);
     const open = [s, o].map((id) => `${g.id}|${g.tournamentId}|${id}`).find((k) => k === state.genOpen); // 開くのは押した試合の行だけ
     return `<tr><td class="name">${t.year} ${SEASON[t.season]}</td><td class="name">${ROUND[g.round]}${g.replayOf ? '<span class="replay">再試合</span>' : ''}</td>
-      <td class="name">${esc(sch(s))}${genBadge(g, s)}</td><td>${res}</td><td>${score}</td><td class="name">${esc(sch(o))}<span class="subtle">${esc(entryPref(g.tournamentId, o))}</span>${genBadge(g, o)}</td></tr>
+      <td class="name">${schoolLink(g.tournamentId, s)}${genBadge(g, s)}</td><td>${res}</td><td>${score}</td><td class="name">${schoolLink(g.tournamentId, o)}<span class="subtle">${esc(entryPref(g.tournamentId, o))}</span>${genBadge(g, o)}</td></tr>
       ${open ? `<tr class="gen-detail"><td colspan="6">${genDetail(...open.split('|').slice(1))}</td></tr>` : ''}`;
   }).join('');
 }
+
+/** 当時の校名で、学校ページへのリンク */
+const schoolLink = (tid, sid) => `<button class="link quiet" data-school="${esc(sid)}">${esc(entryName(tid, sid))}</button>`;
 
 // ---------- ドラフト ----------
 const kindRound = (d) => (d.kind === 'development' ? `育成${d.round ?? ''}位` : d.round ? `${d.round}位` : '枠');
@@ -265,7 +267,7 @@ function viewDebut() {
       <div class="table-wrap"><table><thead><tr><th class="name">大会</th><th class="name">学校</th><th>登場順</th><th class="name">初戦</th><th></th><th>スコア</th><th class="name">相手</th><th>最終成績</th></tr></thead><tbody>
       ${last.map((d) => `<tr><td class="name">${d.tournament.year} 夏</td><td class="name">${nameCell('school', d.schoolId, entryName(d.tournament.id, d.schoolId))}</td><td>${d.order}/${d.tournament.numTeams}</td>
         <td class="name">${ROUND[d.firstGame.round]}<span class="subtle">${esc((d.firstGame.date || '').slice(5).replace('-', '/'))}</span></td><td>${mark(d.result)}</td><td>${d.score[0] ?? '—'} - ${d.score[1] ?? '—'}</td>
-        <td class="name">${esc(entryName(d.tournament.id, d.opponent))}<span class="subtle">${esc(entryPref(d.tournament.id, d.opponent))}</span></td><td><span class="${stageTag(d.stage)}">${esc(d.stage)}</span></td></tr>`).join('')}
+        <td class="name">${schoolLink(d.tournament.id, d.opponent)}<span class="subtle">${esc(entryPref(d.tournament.id, d.opponent))}</span></td><td><span class="${stageTag(d.stage)}">${esc(d.stage)}</span></td></tr>`).join('')}
       </tbody></table></div>` : '<p class="empty">この条件に当てはまる大会はありません。期間や出場校数を変えてください。</p>'}</div>
 `;
 }

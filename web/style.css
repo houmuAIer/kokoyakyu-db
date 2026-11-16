@@ -104,6 +104,8 @@ tbody tr:hover td { background: var(--hover); }
 tbody tr:last-child td { border-bottom: 0; }
 .link { background: none; border: 0; padding: 0; cursor: pointer; color: var(--ink); font-weight: 700; text-align: left; }
 .link:hover { color: var(--seam); }
+.link.quiet { font-weight: inherit; text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; }
+.link.quiet:hover { text-decoration-color: var(--seam); }
 .subtle { color: var(--ink-soft); font-size: .82rem; margin-left: 8px; font-weight: 400; }
 .win { color: var(--seam); font-weight: 700; }
 .lose { color: var(--ink); }
