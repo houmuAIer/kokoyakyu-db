@@ -163,3 +163,8 @@ td .circled { display: inline-block; min-width: 1.9em; padding: 1px 7px; border-
 .gen-detail td { background: var(--seam-soft); font-size: .85rem; text-align: left; }
 .gen-list { margin: 4px 0 0; padding-left: 1.2em; }
 .draft-declined { margin-left: 6px; padding: 0 5px; border-radius: 4px; background: var(--ink-soft); color: #fff; font-size: .72rem; }
+.draft-gen.later { border-color: var(--ink); background: var(--hover); color: var(--ink); }
+.draft-gen.later.zero { border-color: var(--line-strong); background: transparent; color: var(--ink-soft); }
+.draft-gen.later.open { background: var(--ink); color: #fff; }
+.gen-head { margin-top: 6px; font-weight: 700; }
+.gen-none { margin: 0 0 0 1.2em; color: var(--ink-soft); }

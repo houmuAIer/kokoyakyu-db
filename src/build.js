@@ -31,6 +31,7 @@ export function buildDb({ tournamentsCsv, schoolsCsv, entriesCsv, gamesCsv, draf
   const drafts = draftsCsv ? parseCsv(draftsCsv).map((d) => ({
     year: int(d.draft_year), team: d.team, kind: d.kind, round: int(d.round ?? ''), player: d.player,
     schoolId: d.school_id, affiliation: d.affiliation, status: d.status,
+    route: d.route || 'hs', classYear: int(d.class_year ?? '') ?? int(d.draft_year),
   })) : [];
 
   const tMap = new Map(), sMap = new Map(), eKey = new Set(), gIds = new Set();
@@ -83,6 +84,8 @@ export function buildDb({ tournamentsCsv, schoolsCsv, entriesCsv, gamesCsv, draf
     if (!sMap.has(d.schoolId)) err(`${tag}: 学校が存在しない ${d.schoolId}`);
     if (!DRAFT_KINDS.includes(d.kind)) err(`${tag}: kind不正 ${d.kind}`);
     if (!DRAFT_STATUS.includes(d.status)) err(`${tag}: status不正 ${d.status}`);
+    if (!['hs', 'later'].includes(d.route)) err(`${tag}: route不正 ${d.route}`);
+    if (d.route === 'hs' ? d.classYear !== d.year : !(d.classYear < d.year)) err(`${tag}: 高3の年 ${d.classYear} が指名年と合わない`);
   }
   if (!errors.length) checkBrackets({ tournaments, entries, games }, err);
   return { db: { tournaments, schools, entries, games, drafts, districts, eras }, errors };

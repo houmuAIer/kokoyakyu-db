@@ -26,7 +26,11 @@ db.games = db.games.map((g) => ({ ...g, a: S(g.a), b: S(g.b), winner: S(g.winner
 db.draftTeams = [...new Set(db.drafts.map((d) => d.team))];
 const teamNo = new Map(db.draftTeams.map((t, i) => [t, i]));
 // 既定値（本指名・入団）は省き、画面側で補う
-db.drafts = db.drafts.map((d) => ({ ...d, schoolId: S(d.schoolId), team: teamNo.get(d.team), affiliation: undefined, kind: d.kind === 'regular' ? undefined : d.kind, status: d.status === 'signed' ? undefined : d.status }));
+db.drafts = db.drafts.map((d) => {
+  const later = d.route === 'later';
+  return { ...d, schoolId: S(d.schoolId), team: teamNo.get(d.team), kind: d.kind === 'regular' ? undefined : d.kind, status: d.status === 'signed' ? undefined : d.status,
+    route: later ? 'later' : undefined, affiliation: later ? d.affiliation : undefined, classYear: later ? d.classYear : undefined };
+});
 mkdirSync(new URL('../public', import.meta.url), { recursive: true });
 const drop = (o) => Object.fromEntries(Object.entries(o).filter(([, v]) => v !== null && v !== '' && v !== undefined));
 writeFileSync(new URL('../public/data.json', import.meta.url), JSON.stringify({ ...db, entries: db.entries.map(drop), games: db.games.map(drop), drafts: db.drafts.map(drop) }));

@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { buildDb } from '../src/build.js';
-import { aggregate, rank, opponents, headToHead, debutOrder, debutStats, lastDebuts, fromYearForRecent, selectTournaments, schoolHistory, draftGeneration, schoolDrafts, generationYears } from '../src/aggregate.js';
+import { aggregate, rank, opponents, headToHead, debutOrder, debutStats, lastDebuts, fromYearForRecent, selectTournaments, schoolHistory, draftGeneration, schoolDrafts, generationYears, draftRanking } from '../src/aggregate.js';
 
 const read = (p) => readFileSync(new URL(`../${p}`, import.meta.url), 'utf8');
 const { db, errors } = buildDb({
@@ -166,14 +166,19 @@ test('ドラフトのデータより前の世代は null、先の世代は parti
   assert.equal(draftGeneration(cut, '2025N', 'S06').partial, true); // 1年生の指名年2027がデータ後
 });
 
-test('ランキングのドラフト指名数は期間（大会の年の範囲）内の指名を数える', () => {
-  const r = by(aggregate(db, { level: 'school' })); // 春夏の大会は2024〜2025年
-  assert.equal(r.S06.drafted, 2); // 2024・2025（2023は期間外）
-  assert.equal(r.S11.drafted, 1);
-  const p = by(aggregate(db, { level: 'prefecture' }));
-  assert.equal(p['大阪'].drafted, 2);
+test('大社経由は高校3年の年で世代に入り、高卒とは別に数える', () => {
+  const g = draftGeneration(db, '2025N', 'S06');
+  assert.deepEqual(g.laterPicks.map((d) => [d.player, d.grade]), [['中村七郎', 3]]); // 2025年に高3、2029年に大学から指名
+  assert.equal(g.count, 3);
+  assert.equal(g.laterPartial, true); // 1年生（2027年高3）の大学経由は2031年なので、データ（〜2029年）ではまだ出そろわない
+  assert.deepEqual(draftGeneration(db, '2024S', 'S06').laterPicks.map((d) => d.grade), [2]); // 2024春は新2年
+});
+
+test('指名数ランキングは期間（大会の年の範囲）に行われたドラフトを数える', () => {
+  const r = by(draftRanking(db, { level: 'school' })); // 春夏の大会は2024〜2025年
+  assert.deepEqual(pick(r.S06, 'total', 'hs', 'later', 'first', 'development'), { total: 2, hs: 2, later: 0, first: 1, development: 1 });
+  assert.equal(r.S11.total, 1);
+  assert.equal(by(draftRanking(db, { level: 'prefecture' }))['大阪'].total, 2);
+  assert.deepEqual(by(draftRanking(db, { level: 'school', fromYear: 2025 })).S06.hs, 1);
   assert.deepEqual(schoolDrafts(db, { schoolId: 'S06', fromYear: 2025 }).map((d) => d.player), ['鈴木二郎']);
-  // 出場のない学校はドラフト順のときだけ並ぶ
-  const only = aggregate(db, { level: 'school', fromYear: 2025 });
-  assert.ok(!rank(only, 'wins').some((x) => x.appearances === 0));
 });

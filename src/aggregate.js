@@ -79,7 +79,7 @@ export function aggregate(db, { level = 'school', ...filter } = {}) {
   const key = keyFn(db, level, idx);
   const rows = new Map();
   const row = (k) => {
-    if (!rows.has(k)) rows.set(k, { key: k, appearances: 0, wins: 0, losses: 0, best8: 0, best4: 0, runnerUp: 0, champion: 0, drafted: 0 });
+    if (!rows.has(k)) rows.set(k, { key: k, appearances: 0, wins: 0, losses: 0, best8: 0, best4: 0, runnerUp: 0, champion: 0 });
     return rows.get(k);
   };
   const reach = stages(db, tSet);
@@ -98,12 +98,6 @@ export function aggregate(db, { level = 'school', ...filter } = {}) {
     const loser = g.winner === g.a ? g.b : g.a;
     row(key(g.tournamentId, g.winner)).wins++;
     row(key(g.tournamentId, loser)).losses++;
-  }
-  // ドラフト指名数：絞り込んだ期間（大会の年の範囲）に指名された高校生。その期間に出場していない学校も数える
-  const span = yearSpan(db, tSet);
-  if (span) {
-    const dk = draftKeyFn(db, level, idx);
-    for (const d of db.drafts ?? []) if (d.year >= span[0] && d.year <= span[1]) row(dk(d.schoolId)).drafted++;
   }
   const label = labelFn(level, idx);
   return [...rows.values()].map((r) => ({ ...r, label: label(r.key), winRate: rate(r.wins, r.losses) }));
@@ -137,7 +131,6 @@ function draftKeyFn(db, level, idx) {
 /** 指標で並べ替え（勝率は最低試合数で足切りできる） */
 export function rank(rows, metric, { minGames = 0, desc = true } = {}) {
   return rows
-    .filter((r) => r.appearances > 0 || (metric === 'drafted' && r.drafted > 0)) // 期間内に出場のない学校はドラフト順のときだけ出す
     .filter((r) => metric !== 'winRate' || (r.winRate !== null && r.wins + r.losses >= minGames))
     .sort((x, y) => (desc ? (y[metric] ?? -1) - (x[metric] ?? -1) : (x[metric] ?? -1) - (y[metric] ?? -1))
       || (y.winRate ?? -1) - (x.winRate ?? -1) || y.wins - x.wins); // 同値は勝率→勝ち星で並べる
@@ -275,7 +268,9 @@ export const generationYears = (t) => Array.from({ length: t.season === 'spring'
 
 /**
  * その大会の時点でその学校に在籍していた、のちのドラフト指名選手（ベンチ入りかどうかは問わない）。
- * 3年生の指名年がデータより前なら null。下級生の指名年がデータより先なら partial（今後のドラフトで増えうる）。
+ * 高卒（高校から直接）と大社（大学・社会人・独立リーグなどを経て）を分けて返す。学年は高校3年の年（classYear）から出す。
+ * 3年生の高3の年がデータの最初の年より前なら null。
+ * 高卒は下級生の指名年がデータより先なら partial。大社は大学経由（高3の4年後）の指名がまだ来ていない学年があれば partial。
  */
 export function draftGeneration(db, tournamentId, schoolId) {
   const { bySchool, tMap, from, to } = draftIndex(db);
@@ -284,10 +279,14 @@ export function draftGeneration(db, tournamentId, schoolId) {
   const ys = generationYears(t);
   if (ys[0] < from) return null;
   const picks = (bySchool.get(schoolId) ?? [])
-    .filter((d) => ys.includes(d.year))
-    .map((d) => ({ ...d, grade: 3 - (d.year - t.year) }))
+    .filter((d) => ys.includes(d.classYear ?? d.year))
+    .map((d) => ({ ...d, grade: 3 - ((d.classYear ?? d.year) - t.year) }))
     .sort((x, y) => y.grade - x.grade || x.year - y.year);
-  return { count: picks.length, picks, partial: ys.at(-1) > to };
+  const hs = picks.filter((d) => (d.route ?? 'hs') === 'hs'), later = picks.filter((d) => d.route === 'later');
+  return {
+    count: hs.length, picks: hs, partial: ys.at(-1) > to,
+    laterCount: later.length, laterPicks: later, laterPartial: ys.at(-1) + 4 > to,
+  };
 }
 
 /** 学校のドラフト指名一覧（絞り込んだ期間の年の範囲、新しい順） */
@@ -297,4 +296,28 @@ export function schoolDrafts(db, { schoolId, ...filter }) {
   return (draftIndex(db).bySchool.get(schoolId) ?? [])
     .filter((d) => d.year >= span[0] && d.year <= span[1])
     .sort((x, y) => y.year - x.year || (x.kind === y.kind ? (x.round ?? 99) - (y.round ?? 99) : x.kind === 'regular' ? -1 : 1));
+}
+
+/**
+ * 指名数のランキング用の集計（絞り込んだ期間＝対象大会の年の範囲に行われたドラフト）。
+ * 甲子園出場校の出身者だけ。都道府県・代表枠・地区は学校の最新の出場時のもの。
+ */
+export function draftRanking(db, { level = 'school', ...filter } = {}) {
+  const idx = indexes(db);
+  const span = yearSpan(db, selectTournaments(db, filter));
+  if (!span) return [];
+  const key = draftKeyFn(db, level, idx);
+  const label = labelFn(level, idx);
+  const rows = new Map();
+  for (const d of db.drafts ?? []) {
+    if (d.year < span[0] || d.year > span[1]) continue;
+    const k = key(d.schoolId);
+    if (!rows.has(k)) rows.set(k, { key: k, label: label(k), total: 0, hs: 0, later: 0, first: 0, development: 0 });
+    const r = rows.get(k);
+    r.total++;
+    (d.route ?? 'hs') === 'hs' ? r.hs++ : r.later++;
+    if (d.kind === 'development') r.development++;
+    else if (d.round === 1) r.first++;
+  }
+  return [...rows.values()];
 }

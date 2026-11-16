@@ -7,7 +7,7 @@
 ## コマンド
 
 - `npm run import` … `config/sources.json` の大会を Wikipedia から取り込み、`data/*.csv` を作り直す（取得した記事は `raw/` に保存し再利用）
-- `npm run import:drafts` … 1965年以降のドラフト会議の記事から、甲子園出場校の高校生の指名（育成・入団拒否を含む）を取り込み `data/drafts.csv` を作り直す（`npm run import` の後に実行。補正は `config/draft-overrides.json`）
+- `npm run import:drafts` … 1965年以降のドラフト会議の記事から、甲子園出場校の出身者の指名（高校から直接と、大学・社会人などを経てのもの。育成・入団拒否を含む）を取り込み `data/drafts.csv` を作り直す（`npm run import` の後に実行。大社経由は選手記事の冒頭を `raw/draft-players.json` にキャッシュ。補正は `config/draft-overrides.json`）
 - `node scripts/crosscheck-champions.js` … 歴代優勝校の一覧と決勝・出場校数を照合
 - `node scripts/lineage-evidence.js` / `node scripts/founding-scan.js` … 学校の統合・改称を見分けるための根拠の洗い出し
 - `node scripts/crosscheck-hb.js <大会ID> <HTML>` … 別出典（高校野球ドットコムの大会ページ）との全試合照合。検証専用
@@ -31,6 +31,6 @@
 
 ## データの出典
 
-試合結果は Wikipedia 日本語版の各大会の記事、ドラフト指名は各年の「新人選手選択会議 (日本プロ野球)」の記事をもとに作成しています（取り込み元の記事の原文はリポジトリに含めていません。`npm run import` で再取得できます）。検証の内容は `VERIFICATION.md` を参照してください。
+試合結果は Wikipedia 日本語版の各大会の記事、ドラフト指名は各年の「新人選手選択会議 (日本プロ野球)」の記事と各選手の記事をもとに作成しています（取り込み元の記事の原文はリポジトリに含めていません。`npm run import` で再取得できます）。検証の内容は `VERIFICATION.md` を参照してください。
 
 個人が運営する非公式のデータベースで、大会主催者・関係団体とは関係ありません。
