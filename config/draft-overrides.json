@@ -1,5 +1,5 @@
 {
-  "note": "ドラフト取り込みの補正。picks のキーは「指名年|選手名」で、school で学校IDを指定、exclude で対象外にする。splitLabels は統合前の学校を所属欄の表記から決められないときの対応（所属欄の表記 → 学校ID）。",
+  "note": "ドラフト取り込みの補正。picks のキーは「指名年|選手名」。school で学校IDを指定、exclude で対象外にする。route=later は大社経由の補正で、選手記事がない選手（直近のドラフトなど）の出身高校と高校3年の年（classYear）を出典つきで指定する。splitLabels は統合前の学校を所属欄の表記から決められないときの対応（所属欄の表記 → 学校ID）。",
   "picks": {
     "1966|斎藤芳明": {
       "school": "栃木県立鹿沼商工高等学校",
@@ -8,6 +8,306 @@
     "1967|中新井明": {
       "school": "栃木県立鹿沼商工高等学校",
       "source": "同上"
+    },
+    "2026|岡田啓吾": {
+      "route": "later",
+      "school": "前橋育英高等学校",
+      "classYear": 2022,
+      "source": "https://www.baseballchannel.jp/npb/295757/3/ 生年月日2004年5月7日・前橋育英高-明治大"
+    },
+    "2026|山里宝": {
+      "route": "later",
+      "school": "神戸国際大学附属高等学校",
+      "classYear": 2022,
+      "source": "https://www.baseballchannel.jp/npb/295757/4/ 生年月日2004年10月23日・神戸国際大付高-亜細亜大"
+    },
+    "2026|榊原七斗": {
+      "route": "later",
+      "school": "報徳学園中学校・高等学校",
+      "classYear": 2022,
+      "source": "https://www.baseballchannel.jp/npb/296127/3/ 生年月日2004年7月15日・報徳学園高-明治大"
+    },
+    "2026|宮原廉": {
+      "route": "later",
+      "school": "崇徳中学校・高等学校",
+      "classYear": 2022,
+      "source": "https://www.baseballchannel.jp/npb/295757/5/ 生年月日2005年1月24日、https://draftdeasobo.atgj.net/（ドラフト候補2026：大学社会人投手） 崇徳"
+    },
+    "2026|黒田義信": {
+      "route": "later",
+      "school": "九州国際大学付属中学校・高等学校",
+      "classYear": 2022,
+      "source": "https://sports.yahoo.co.jp/column/detail/2026061100003-spnavi 東日本国際大4年・九州国際大付"
+    },
+    "2026|吉川凌平": {
+      "route": "later",
+      "school": "習志野市立習志野高等学校",
+      "classYear": 2022,
+      "source": "https://www.hb-nippon.com/articles/17313 習志野-千葉商科大、大学4年（指名年の4年前が高3）"
+    },
+    "2026|春山陽登": {
+      "route": "later",
+      "school": "敦賀気比高等学校・付属中学校",
+      "classYear": 2022,
+      "source": "https://baseball.omyutech.com/draftplayer.action?year=2026 敦賀気比高校（大阪商業大）、大学4年（指名年の4年前が高3）"
+    },
+    "2026|野村亮輔": {
+      "route": "later",
+      "school": "綾羽高等学校",
+      "classYear": 2022,
+      "source": "https://www.hb-nippon.com/articles/17313 綾羽-佛教大、大学4年（指名年の4年前が高3）"
+    },
+    "2026|川尻啓人": {
+      "route": "later",
+      "school": "富山県立高岡商業高等学校",
+      "classYear": 2022,
+      "source": "https://www.hb-nippon.com/articles/16912 亜細亜大・高岡商、大学4年（指名年の4年前が高3）"
+    },
+    "2026|常深颯大": {
+      "route": "later",
+      "school": "明石市立明石商業高等学校",
+      "classYear": 2022,
+      "source": "https://www.baseballchannel.jp/npb/tigers/297855/ 明石商高-大阪経済大、大学4年（指名年の4年前が高3）"
+    },
+    "2026|馬場拓海": {
+      "route": "later",
+      "school": "福岡大学附属大濠中学校・高等学校",
+      "classYear": 2022,
+      "source": "https://www.baseballchannel.jp/npb/tigers/297855/ 福岡大大濠高-日本体育大、大学4年（指名年の4年前が高3）"
+    },
+    "2026|相羽寛太": {
+      "route": "later",
+      "school": "静岡県立静岡高等学校",
+      "classYear": 2020,
+      "source": "https://www.yamaha.com/ja/baseball/intercity-baseball-tournament/2025/pdf/player_directory_2025.pdf 生年月日2002.9.21・静岡高"
+    },
+    "2026|田本聖貴": {
+      "route": "later",
+      "school": "岡山理科大学附属中学校・高等学校",
+      "classYear": 2022,
+      "source": "https://www.baseballchannel.jp/npb/hawks/297888/2/ 岡山理大付高-駒澤大、大学4年（指名年の4年前が高3）"
+    },
+    "2026|辻村大我": {
+      "route": "later",
+      "school": "龍谷大学付属平安中学校・高等学校",
+      "classYear": 2022,
+      "source": "https://www.baseballchannel.jp/npb/hawks/297888/2/ 龍谷大平安高-東北福祉大、大学4年（指名年の4年前が高3）"
+    },
+    "2026|村山勇太": {
+      "route": "later",
+      "school": "京都外大西高等学校",
+      "classYear": 2022,
+      "source": "https://www.baseballchannel.jp/npb/hawks/297888/2/ 京都外大西高-関西国際大、大学4年（指名年の4年前が高3）"
+    },
+    "2026|鶴川内陽": {
+      "route": "later",
+      "school": "大和高田市立高田商業高等学校",
+      "classYear": 2022,
+      "source": "https://www.baseballchannel.jp/npb/hawks/297888/2/ 高田商高-大阪商業大（奈良の高田商と判断・確信度中）、大学4年（指名年の4年前が高3）"
+    },
+    "2026|松林幸紀": {
+      "route": "later",
+      "school": "広陵高等学校 (広島県)",
+      "classYear": 2022,
+      "source": "https://www.baseballchannel.jp/npb/hawks/297888/2/ 広陵高-大阪商業大、https://draftdeasobo.atgj.net/（ドラフト候補2026：大学社会人投手） 広島県出身、大学4年（指名年の4年前が高3）"
+    },
+    "2026|渡邉都斗": {
+      "route": "later",
+      "school": "至学館高等学校",
+      "classYear": 2020,
+      "source": "https://draftdeasobo.atgj.net/（ドラフト候補2026：大学社会人投手） 至学館-中京大・独立2年目"
+    },
+    "2026|金韓根": {
+      "route": "later",
+      "school": "東海大学付属浦安高等学校・中等部",
+      "classYear": 2020,
+      "source": "https://draftdeasobo.atgj.net/（ドラフト候補2026：大学社会人投手） 東海浦安-東海大・独立2年目"
+    },
+    "2026|長屋竣大": {
+      "route": "later",
+      "school": "浜松開誠館中学校・高等学校",
+      "classYear": 2020,
+      "source": "https://www.hb-nippon.com/players/28926 生年月日2003/02/13・浜松開誠館-立命館大-ENEOS"
+    },
+    "2026|石澤大和": {
+      "route": "later",
+      "school": "北海道網走南ヶ丘高等学校",
+      "classYear": 2019,
+      "source": "https://www.baseballchannel.jp/npb/swallows/297886/ 網走南ヶ丘高-東京農業大北海道オホーツク-日本製鉄室蘭、https://draftdeasobo.atgj.net/（ドラフト候補2026：大学社会人投手） 3年目"
+    },
+    "2026|仲井慎": {
+      "route": "later",
+      "school": "下関国際高等学校",
+      "classYear": 2022,
+      "source": "https://draftdeasobo.atgj.net/（ドラフト候補2026：大学社会人投手） 下関国際（駒澤大）、大学4年（指名年の4年前が高3）"
+    },
+    "2026|千葉汐凱": {
+      "route": "later",
+      "school": "千葉黎明高等学校",
+      "classYear": 2020,
+      "source": "https://www.hb-nippon.com/articles/2699 千葉黎明-明治大・Honda新人（23歳）"
+    },
+    "2026|森煌誠": {
+      "route": "later",
+      "school": "徳島県立徳島商業高等学校",
+      "classYear": 2023,
+      "source": "https://draftdeasobo.atgj.net/（ドラフト候補2026：大学社会人投手） 徳島商・NTT東日本3年目（高卒）"
+    },
+    "2026|加藤宇": {
+      "route": "later",
+      "school": "堀越高等学校",
+      "classYear": 2022,
+      "source": "https://draftdeasobo.atgj.net/（ドラフト候補2026：大学社会人投手） 堀越（明星大）、大学4年（指名年の4年前が高3）"
+    },
+    "2026|星野世那": {
+      "route": "later",
+      "school": "近江高等学校",
+      "classYear": 2022,
+      "source": "https://draftdeasobo.atgj.net/（ドラフト候補2026：大学社会人投手） 近江（大阪商業大）、大学4年（指名年の4年前が高3）"
+    },
+    "2026|小金井凌生": {
+      "route": "later",
+      "school": "日本体育大学荏原高等学校",
+      "classYear": 2022,
+      "source": "https://draftdeasobo.atgj.net/（ドラフト候補2026：大学社会人投手） 日体荏原（青森大）、大学4年（指名年の4年前が高3）"
+    },
+    "2026|木口永翔": {
+      "route": "later",
+      "school": "筑陽学園中学校・高等学校",
+      "classYear": 2022,
+      "source": "https://draftdeasobo.atgj.net/（ドラフト候補2026：大学社会人投手） 筑陽学園（上武大）、大学4年（指名年の4年前が高3）"
+    },
+    "2026|沢山優介": {
+      "route": "later",
+      "school": "静岡県立掛川西高等学校",
+      "classYear": 2021,
+      "source": "https://draftdeasobo.atgj.net/（ドラフト候補2026：大学社会人投手） 掛川西・ヤマハ5年目（高卒）"
+    },
+    "2026|三浦遼大": {
+      "route": "later",
+      "school": "青森山田中学高等学校",
+      "classYear": 2023,
+      "source": "https://draftdeasobo.atgj.net/（ドラフト候補2026：大学社会人投手） 青森山田・茨城AP3年目（高卒）"
+    },
+    "2026|有馬伽久": {
+      "route": "later",
+      "school": "愛知工業大学名電中学校・高等学校",
+      "classYear": 2022,
+      "source": "https://www.ritsumei.ac.jp/sports-culture/sports/topics/detail/?id=1031 出身高校 愛知工業大学名電、大学4年（指名年の4年前が高3）"
+    },
+    "2026|渡辺和大": {
+      "route": "later",
+      "school": "香川県立高松商業高等学校",
+      "classYear": 2022,
+      "source": "https://sports.yahoo.co.jp/column/detail/2026062500005-spnavi 慶応大4年・高松商"
+    },
+    "2026|猪俣駿太": {
+      "route": "later",
+      "school": "明秀学園日立高等学校",
+      "classYear": 2022,
+      "source": "https://draftdeasobo.atgj.net/（ドラフト候補2026：大学社会人投手） 明秀日立（東北福祉大）、大学4年（指名年の4年前が高3）"
+    },
+    "2026|山下健信": {
+      "route": "later",
+      "school": "興國高等学校",
+      "classYear": 2021,
+      "source": "https://draftdeasobo.atgj.net/（ドラフト候補2026：大学社会人投手） 興国-関西大・独立1年目"
+    },
+    "2026|荒木誠也": {
+      "route": "later",
+      "school": "福岡県立戸畑高等学校",
+      "classYear": 2020,
+      "source": "https://draftdeasobo.atgj.net/（ドラフト候補2026：大学社会人投手） 戸畑-九産大・独立2年目"
+    },
+    "2026|前嶋藍": {
+      "route": "later",
+      "school": "横浜隼人中学校・高等学校",
+      "classYear": 2022,
+      "source": "https://www.daily.co.jp/baseball/2026/01/19/0019926585.shtml 2004年11月20日生まれ・横浜隼人"
+    },
+    "2026|佐藤悠太": {
+      "route": "later",
+      "school": "報徳学園中学校・高等学校",
+      "classYear": 2022,
+      "source": "https://www.daily.co.jp/baseball/2026/06/10/0020458145.shtml 東北福祉大4年・報徳学園"
+    },
+    "2026|西野啓也": {
+      "route": "later",
+      "school": "高知中学校・高等学校",
+      "classYear": 2022,
+      "source": "https://www.ritsumei.ac.jp/sports-culture/sports/topics/detail/?id=1012 4回生・高知高校"
+    },
+    "2026|光弘帆高": {
+      "route": "later",
+      "school": "履正社中学校・高等学校",
+      "classYear": 2022,
+      "source": "https://baseball.omyutech.com/draftplayer.action?year=2026 履正社（明治大）、大学4年（指名年の4年前が高3）"
+    },
+    "2026|尾﨑完太": {
+      "route": "later",
+      "school": "滋賀学園高等学校",
+      "classYear": 2019,
+      "source": "https://www.segasammy.co.jp/ja/sports/segasammy-baseball/review/48244/ 2024年ルーキー・滋賀学園-法政大"
+    },
+    "2026|中津大和": {
+      "route": "later",
+      "school": "小松大谷高等学校",
+      "classYear": 2020,
+      "source": "https://baseball.omyutech.com/draftplayer.action?year=2026 小松大谷高-法政大（日本生命、24歳）"
+    },
+    "2026|萩原義輝": {
+      "route": "later",
+      "school": "東海大学付属相模高等学校・中等部",
+      "classYear": 2019,
+      "source": "https://www.daily.co.jp/baseball/2023/04/08/0016223672.shtml 2001年4月6日生まれ・東海大相模"
+    },
+    "2026|高義博": {
+      "route": "later",
+      "school": "関西創価中学校・高等学校",
+      "classYear": 2022,
+      "source": "https://sp.baseball.findfriends.jp/player/20040110/ 関西創価高・23年BC新潟入団"
+    },
+    "2026|藤原佑": {
+      "route": "later",
+      "school": "島根県立大社高等学校",
+      "classYear": 2024,
+      "source": "https://www.baseballchannel.jp/etc/297067/ 2024年夏の甲子園8強の大社のリードオフマン"
+    },
+    "2026|岡田光平": {
+      "route": "later",
+      "school": "報徳学園中学校・高等学校",
+      "classYear": 2022,
+      "source": "https://number.bunshun.jp/articles/-/872411 報徳学園（榊原七斗・佐藤悠太と同期）・大阪工業大"
+    },
+    "2026|井尻琉斗": {
+      "route": "later",
+      "school": "北海高等学校",
+      "classYear": 2022,
+      "source": "https://www.baseballchannel.jp/npb/296727/ 北海高主将-仙台大、大学4年（指名年の4年前が高3）"
+    },
+    "2026|車谷仁": {
+      "route": "later",
+      "school": "福井工業大学附属福井中学校・高等学校",
+      "classYear": 2020,
+      "source": "https://baseball.yahoo.co.jp/ipbl/player/2117684/top 2003年2月3日・福井工大福井高"
+    },
+    "2026|田代旭": {
+      "route": "later",
+      "school": "花巻東高等学校",
+      "classYear": 2022,
+      "source": "https://www.baseballchannel.jp/etc/118670/3/ 2004年4月6日生まれ・花巻東"
+    },
+    "2026|坂口渉": {
+      "route": "later",
+      "school": "興譲館高等学校",
+      "classYear": 2020,
+      "source": "https://www.hb-nippon.com/articles/2699 興譲館-城西大・Honda新人（23歳）"
+    },
+    "2026|西野日向": {
+      "route": "later",
+      "school": "松山聖陵高等学校",
+      "classYear": 2020,
+      "source": "https://baseball.yahoo.co.jp/ipbl/player/2123284/top 2002年9月8日・松山聖陵高"
     }
   },
   "splitLabels": {

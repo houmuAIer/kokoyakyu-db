@@ -112,7 +112,7 @@ function genDetail(tid, sid) {
     <div class="gen-head">大学・社会人などを経て指名${more(g.laterPartial, '大学経由などでこれから増える可能性があります')}</div>${list(g.laterPicks, true)}`;
 }
 const DRAFT_LATEST = Math.max(...db.drafts.map((d) => d.year));
-const LATEST_NOTE = `最新（${DRAFT_LATEST}年）のドラフトの大社経由は、Wikipediaに選手の記事ができるまで一部しか入っていません。`;
+const LATEST_NOTE = `最新（${DRAFT_LATEST}年）のドラフトの大社経由は、Wikipediaに選手の記事がまだないため、球団・大学・報道の情報で出身高校と学年を補っています（確認できなかった選手は入っていません）。`;
 const GEN_NOTE = `<p class="note">「指名n」「大社n」は、その大会の時点でその学校に在籍していた、のちのドラフト指名選手の数です。「指名」は高校から直接、「大社」は大学・社会人・独立リーグなどを経ての指名（学年は生年月日から判定）。夏は1〜3年、春は新2・3年で、ベンチ入りかどうかは問いません。育成・入団拒否を含み、1965年以降のドラフトが対象。押すと内訳が出ます。「+」はこれから増える可能性がある大会です。${LATEST_NOTE}</p>`;
 
 const entryName = (tid, sid) => entryIdx.get(`${tid}|${sid}`)?.nameAtTime ?? schoolById.get(sid).name;

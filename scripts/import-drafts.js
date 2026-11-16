@@ -80,8 +80,9 @@ for (const x of picks) {
   const key = `${x.year}|${x.kind}|${x.playerArticle || x.player}`;
   if (seen.has(key)) continue;
   seen.add(key);
-  const ov = overrides.picks?.[`${x.year}|${x.player}`];
-  if (ov?.exclude) continue;
+  const ov0 = overrides.picks?.[`${x.year}|${x.player}`];
+  if (ov0?.exclude) continue;
+  const ov = ov0?.route === 'later' ? null : ov0; // 大社経由の補正はこちらでは使わない
   const link = ov?.school ?? x.affiliationLinks.find(isHighSchool);
   if (!link) continue;
   const sid = ov?.school ?? schoolIdFor(link, x.affiliation, x.year);
@@ -138,8 +139,8 @@ for (const x of later) {
   const link = ov?.school ?? info?.school;
   if (!link) { laterStats.noSchool++; continue; }
   const birth = ov?.birth ?? info?.birth;
-  if (!birth) { laterStats.noBirth++; continue; }
-  const classYear = classYearOf(birth);
+  if (!birth && !ov?.classYear) { laterStats.noBirth++; continue; }
+  const classYear = ov?.classYear ?? classYearOf(birth);
   // 同名の別人の記事などを除くため、高3の翌年〜15年後の指名だけを採る
   if (classYear >= x.year || x.year - classYear > 15) { laterStats.mismatch++; laterStats.odd.push(`${x.year} ${x.player}：高3の年 ${classYear}`); continue; }
   const sid = ov?.school ?? schoolIdFor(link, info?.schoolLabel ?? '', classYear);
