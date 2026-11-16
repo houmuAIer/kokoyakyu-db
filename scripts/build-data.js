@@ -8,6 +8,7 @@ const { db, errors } = buildDb({
   schoolsCsv: read('data/schools.csv'),
   entriesCsv: read('data/entries.csv'),
   gamesCsv: read('data/games.csv'),
+  draftsCsv: read('data/drafts.csv'),
   districts: JSON.parse(read('config/districts.json')),
   eras: JSON.parse(read('config/eras.json')),
 });
@@ -21,7 +22,12 @@ const S = (id) => (id ? short.get(id) : id);
 db.schools = db.schools.map((sc) => ({ ...sc, article: sc.id, id: S(sc.id) }));
 db.entries = db.entries.map((e) => ({ ...e, schoolId: S(e.schoolId) }));
 db.games = db.games.map((g) => ({ ...g, a: S(g.a), b: S(g.b), winner: S(g.winner) }));
+// ドラフトは球団名を番号にして小さくする（teams に一覧）
+db.draftTeams = [...new Set(db.drafts.map((d) => d.team))];
+const teamNo = new Map(db.draftTeams.map((t, i) => [t, i]));
+// 既定値（本指名・入団）は省き、画面側で補う
+db.drafts = db.drafts.map((d) => ({ ...d, schoolId: S(d.schoolId), team: teamNo.get(d.team), affiliation: undefined, kind: d.kind === 'regular' ? undefined : d.kind, status: d.status === 'signed' ? undefined : d.status }));
 mkdirSync(new URL('../public', import.meta.url), { recursive: true });
 const drop = (o) => Object.fromEntries(Object.entries(o).filter(([, v]) => v !== null && v !== '' && v !== undefined));
-writeFileSync(new URL('../public/data.json', import.meta.url), JSON.stringify({ ...db, entries: db.entries.map(drop), games: db.games.map(drop) }));
-console.log(`OK: 大会${db.tournaments.length} 学校${db.schools.length} 出場${db.entries.length} 試合${db.games.length}`);
+writeFileSync(new URL('../public/data.json', import.meta.url), JSON.stringify({ ...db, entries: db.entries.map(drop), games: db.games.map(drop), drafts: db.drafts.map(drop) }));
+console.log(`OK: 大会${db.tournaments.length} 学校${db.schools.length} 出場${db.entries.length} 試合${db.games.length} ドラフト${db.drafts.length}`);

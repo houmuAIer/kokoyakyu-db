@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "import": "node scripts/import-wikipedia.js",
+    "import:drafts": "node scripts/import-drafts.js",
     "build:data": "node scripts/build-data.js",
     "build": "node scripts/build-data.js && node scripts/build-site.js",
     "preview": "node scripts/build-data.js && node scripts/build-site.js --preview",

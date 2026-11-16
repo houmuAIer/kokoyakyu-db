@@ -1,12 +1,13 @@
-import { aggregate, rank, opponents, headToHead, lastDebuts, fromYearForRecent, schoolHistory } from './aggregate.js';
+import { aggregate, rank, opponents, headToHead, lastDebuts, fromYearForRecent, schoolHistory, draftGeneration, schoolDrafts } from './aggregate.js';
 
 const db = window.__DATA__ ?? await (await fetch('./data.json')).json();
+db.drafts = (db.drafts ?? []).map((d) => ({ ...d, kind: d.kind ?? 'regular', status: d.status ?? 'signed', team: db.draftTeams[d.team] }));
 
 // ---------- 定数・ユーティリティ ----------
 const LEVELS = { school: '学校', prefecture: '都道府県', slot: '代表枠', district: '地区' };
 const METRICS = [
   ['appearances', '出場'], ['wins', '勝'], ['losses', '敗'], ['winRate', '勝率'],
-  ['best8', 'ベスト8'], ['best4', 'ベスト4'], ['runnerUp', '準優勝'], ['champion', '優勝'],
+  ['best8', 'ベスト8'], ['best4', 'ベスト4'], ['runnerUp', '準優勝'], ['champion', '優勝'], ['drafted', 'ドラフト'],
 ];
 const ROUND = { R1: '1回戦', R2: '2回戦', R3: '3回戦', QF: '準々決勝', SF: '準決勝', F: '決勝' };
 const SEASON = { spring: '春', summer: '夏', exchange: '交流' };
@@ -31,6 +32,7 @@ const state = {
   h2h: { level: 'prefecture', a: null, b: '' },
   school: null,
   debutTeams: '49',
+  genOpen: null, // 世代のドラフト指名を開いている「大会ID|学校ID」
 };
 
 function filter() {
@@ -73,10 +75,32 @@ function gameRows(games, selfKeyFn) {
       : g.winner === s ? '<span class="win">○</span>' : '<span class="lose">●</span>';
     const score = ss === null ? '—' : `${ss} - ${os}`;
     const sch = (id) => entryName(g.tournamentId, id);
+    const open = [s, o].map((id) => `${g.tournamentId}|${id}`).find((k) => k === state.genOpen);
     return `<tr><td class="name">${t.year} ${SEASON[t.season]}</td><td class="name">${ROUND[g.round]}${g.replayOf ? '<span class="replay">再試合</span>' : ''}</td>
-      <td class="name">${esc(sch(s))}</td><td>${res}</td><td>${score}</td><td class="name">${esc(sch(o))}<span class="subtle">${esc(entryPref(g.tournamentId, o))}</span></td></tr>`;
+      <td class="name">${esc(sch(s))}${genBadge(g.tournamentId, s)}</td><td>${res}</td><td>${score}</td><td class="name">${esc(sch(o))}<span class="subtle">${esc(entryPref(g.tournamentId, o))}</span>${genBadge(g.tournamentId, o)}</td></tr>
+      ${open ? `<tr class="gen-detail"><td colspan="6">${genDetail(...open.split('|'))}</td></tr>` : ''}`;
   }).join('');
 }
+
+// ---------- ドラフト ----------
+const kindRound = (d) => (d.kind === 'development' ? `育成${d.round ?? ''}位` : d.round ? `${d.round}位` : '枠');
+const statusTag = (d) => (d.status === 'declined' ? '<span class="draft-declined">拒否</span>' : d.status === 'canceled' ? '<span class="draft-declined">取消</span>' : '');
+/** 大会の時点で在籍していた、のちのドラフト指名選手の数（押すと内訳） */
+function genBadge(tid, sid) {
+  const g = draftGeneration(db, tid, sid);
+  if (!g) return '';
+  const key = `${tid}|${sid}`;
+  return `<button class="draft-gen ${g.count ? '' : 'zero'} ${state.genOpen === key ? 'open' : ''}" data-gen="${esc(key)}" title="この大会の時点で在籍していた、のちのドラフト指名選手">指名${g.count}${g.partial ? '+' : ''}</button>`;
+}
+function genDetail(tid, sid) {
+  const g = draftGeneration(db, tid, sid);
+  const t = tById.get(tid);
+  const who = `${esc(entryName(tid, sid))}（${t.year} ${SEASON[t.season]}）`;
+  const note = g.partial ? '<span class="subtle">下級生はこれからのドラフトで増える可能性があります</span>' : '';
+  if (!g.count) return `${who}：在籍していたドラフト指名選手はいません${note}`;
+  return `${who}${note}<ul class="gen-list">${g.picks.map((d) => `<li>${d.grade}年 ${esc(d.player)} <span class="subtle">${d.year} ${esc(d.team)} ${kindRound(d)}</span>${statusTag(d)}</li>`).join('')}</ul>`;
+}
+const GEN_NOTE = '<p class="note">「指名n」は、その大会の時点でその学校に在籍していた、のちのドラフト指名選手の数です（夏は1〜3年、春は新2・3年。ベンチ入りかどうかは問いません。育成・入団拒否を含み、1965年以降の高校からの指名が対象）。押すと内訳が出ます。「+」は下級生の指名がまだ確定していない大会です。</p>';
 const entryName = (tid, sid) => entryIdx.get(`${tid}|${sid}`)?.nameAtTime ?? schoolById.get(sid).name;
 const gamesTable = (rowsHtml) => `<div class="table-wrap"><table><thead><tr><th class="name">大会</th><th class="name">回戦</th><th class="name">学校</th><th></th><th>スコア</th><th class="name">相手</th></tr></thead><tbody>${rowsHtml}</tbody></table></div>`;
 
@@ -90,7 +114,7 @@ function viewRanking() {
     prev = v; prevRank = rk;
     return `<tr><td class="rank">${rk}</td><td class="name">${nameCell(state.level, r.key, r.label)}</td>
       <td>${r.appearances}</td><td>${r.wins}</td><td>${r.losses}</td><td>${pct(r.winRate)}</td>
-      <td>${r.best8}</td><td>${r.best4}</td><td>${r.runnerUp}</td><td>${r.champion ? `<span class="circled">${r.champion}</span>` : 0}</td></tr>`;
+      <td>${r.best8}</td><td>${r.best4}</td><td>${r.runnerUp}</td><td>${r.champion ? `<span class="circled">${r.champion}</span>` : 0}</td><td>${r.drafted}</td></tr>`;
   }).join('');
   const head = METRICS.map(([k, l]) => `<th class="sortable ${k === state.metric ? 'active' : ''}" data-metric="${k}">${l}</th>`).join('');
   return `<div class="controls">
@@ -98,6 +122,7 @@ function viewRanking() {
       <label>並び順 <select id="metric">${METRICS.map(([k, l]) => `<option value="${k}" ${k === state.metric ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
       ${state.metric === 'winRate' ? `<label>最低試合数 <input type="number" id="min-games" min="0" value="${state.minGames}"></label>` : ''}
     </div>
+    ${state.metric === 'drafted' ? '<p class="note">ドラフトは、期間内（大会の年の範囲）に高校から指名された選手の数です。育成・入団拒否を含みます。甲子園に出場したことのある学校だけが対象で、県・地区は学校の最新の出場時のものです。</p>' : ''}
     <div class="ledger">${rows.length ? `<div class="table-wrap"><table><thead><tr><th class="rank">順位</th><th class="name">${LEVELS[state.level]}</th>${head}</tr></thead><tbody>${body}</tbody></table></div>` : '<p class="empty">この条件に当てはまる出場校はありません。期間や大会を広げてください。</p>'}</div>`;
 }
 
@@ -118,7 +143,7 @@ function viewH2H() {
     const label = (k) => keys.find(([x]) => x === k)?.[1] ?? k;
     content = `<div class="ledger"><div class="ledger-title"><h2>${esc(label(h.a))} 対 ${esc(label(h.b))}</h2>${h.a === h.b ? '<span class="aside">同じグループ同士の対戦なので、各試合が1勝1敗になります</span>' : ''}</div>
       <div class="record"><span class="big"><span class="w">${r.wins}</span><small>勝</small>${r.losses}<small>敗</small></span><span class="rate">勝率<b>${pct(r.winRate)}</b></span></div>
-      ${r.games.length ? gamesTable(gameRows(r.games, selfKey)) : '<p class="empty">この条件での対戦はありません</p>'}</div>`;
+      ${r.games.length ? GEN_NOTE + gamesTable(gameRows(r.games, selfKey)) : '<p class="empty">この条件での対戦はありません</p>'}</div>`;
   } else {
     const rows = opponents(db, { level: h.level, key: h.a, ...filter() })
       .sort((x, y) => (y.wins + y.losses) - (x.wins + x.losses) || y.wins - x.wins);
@@ -142,19 +167,24 @@ function viewSchool() {
   const hist = schoolHistory(db, { schoolId: s.id, ...f });
   const opp = opponents(db, { level: 'school', key: s.id, ...f }).sort((x, y) => y.games.length - x.games.length || schoolSort(x.key, y.key));
   const allGames = opp.flatMap((o) => o.games);
+  const drafts = schoolDrafts(db, { schoolId: s.id, ...f });
+  const genCell = (h) => { const g = draftGeneration(db, h.tournament.id, s.id); return g ? `${g.count}${g.partial ? '+' : ''}` : '—'; };
   const stat = (k, v) => `<div><dt>${k}</dt><dd>${v}</dd></div>`;
   const tag = (r) => (r === '優勝' ? 'circled' : r === '準優勝' ? 'result-runner' : 'result-plain');
   return `<div class="controls"><label>学校 <input list="school-list" id="school-input" placeholder="校名で検索" value="${esc(`${s.name}（${s.prefecture}）`)}"></label>
       <datalist id="school-list">${keys.map(([, l]) => `<option value="${esc(l)}">`).join('')}</datalist></div>
     <div class="ledger"><div class="ledger-title"><h2>${esc(s.name)}</h2><span class="aside">${esc(s.prefecture)}（${esc(db.districts[s.prefecture])}地区）</span></div>
-      ${sum ? `<dl class="tally">${stat('出場', sum.appearances)}${stat('勝敗', `${sum.wins}-${sum.losses}`)}${stat('勝率', pct(sum.winRate))}${stat('ベスト8', sum.best8)}${stat('ベスト4', sum.best4)}${stat('準優勝', sum.runnerUp)}${stat('優勝', sum.champion)}</dl>` : '<p class="empty">この条件での出場はありません。期間や大会を広げてください。</p>'}
-      ${hist.length ? `<h3>出場履歴</h3><div class="table-wrap"><table><thead><tr><th class="name">大会</th><th class="name">当時の校名</th><th class="name">代表枠</th><th>成績</th><th>勝敗</th></tr></thead><tbody>
-        ${hist.map((h) => `<tr><td class="name">${h.tournament.year} ${SEASON[h.tournament.season]}${h.tournament.edition ? `<span class="subtle">第${h.tournament.edition}回</span>` : ''}</td><td class="name">${esc(h.nameAtTime)}</td><td class="name">${esc(h.slot)}</td><td><span class="${tag(h.result)}">${esc(h.result)}</span></td><td>${h.wins}-${h.losses}</td></tr>`).join('')}
+      ${sum ? `<dl class="tally">${stat('出場', sum.appearances)}${stat('勝敗', `${sum.wins}-${sum.losses}`)}${stat('勝率', pct(sum.winRate))}${stat('ベスト8', sum.best8)}${stat('ベスト4', sum.best4)}${stat('準優勝', sum.runnerUp)}${stat('優勝', sum.champion)}${stat('ドラフト', drafts.length)}</dl>` : '<p class="empty">この条件での出場はありません。期間や大会を広げてください。</p>'}
+      ${hist.length ? `<h3>出場履歴</h3><div class="table-wrap"><table><thead><tr><th class="name">大会</th><th class="name">当時の校名</th><th class="name">代表枠</th><th>成績</th><th>勝敗</th><th>在籍の指名</th></tr></thead><tbody>
+        ${hist.map((h) => `<tr><td class="name">${h.tournament.year} ${SEASON[h.tournament.season]}${h.tournament.edition ? `<span class="subtle">第${h.tournament.edition}回</span>` : ''}</td><td class="name">${esc(h.nameAtTime)}</td><td class="name">${esc(h.slot)}</td><td><span class="${tag(h.result)}">${esc(h.result)}</span></td><td>${h.wins}-${h.losses}</td><td>${genCell(h)}</td></tr>`).join('')}
       </tbody></table></div>` : ''}
       ${opp.length ? `<h3>対戦校別</h3><div class="table-wrap"><table><thead><tr><th class="name">対戦校</th><th>勝</th><th>敗</th><th>試合</th></tr></thead><tbody>
         ${opp.map((o) => `<tr><td class="name">${nameCell('school', o.key, o.label)}</td><td>${o.wins}</td><td>${o.losses}</td><td>${o.games.length}</td></tr>`).join('')}
       </tbody></table></div>
-      <h3>全試合</h3>${gamesTable(gameRows(allGames, (g, sid) => sid === s.id))}` : ''}
+      <h3>全試合</h3>${GEN_NOTE}${gamesTable(gameRows(allGames, (g, sid) => sid === s.id))}` : ''}
+      ${drafts.length ? `<h3>ドラフト指名（高校から）</h3><div class="table-wrap"><table><thead><tr><th class="name">年</th><th class="name">選手</th><th class="name">球団・順位</th></tr></thead><tbody>
+        ${drafts.map((d) => `<tr><td class="name">${d.year}</td><td class="name">${esc(d.player)}${statusTag(d)}</td><td class="name">${esc(d.team)}<span class="subtle">${kindRound(d)}</span></td></tr>`).join('')}
+      </tbody></table></div>` : ''}
     </div>`;
 }
 
@@ -231,10 +261,11 @@ view.addEventListener('change', (e) => {
   render();
 });
 view.addEventListener('click', (e) => {
-  const t = e.target.closest('[data-metric],[data-school],[data-h2h-a],[data-h2h-b]');
+  const t = e.target.closest('[data-metric],[data-school],[data-h2h-a],[data-h2h-b],[data-gen]');
   if (!t) return;
   const d = t.dataset;
-  if (d.metric) state.metric = d.metric;
+  if (d.gen) state.genOpen = state.genOpen === d.gen ? null : d.gen;
+  else if (d.metric) state.metric = d.metric;
   else if (d.school) { state.school = d.school; state.tab = 'school'; window.scrollTo(0, 0); }
   else if (d.h2hA) { state.h2h = { level: d.h2hLevel, a: d.h2hA, b: '' }; state.tab = 'h2h'; window.scrollTo(0, 0); }
   else if (d.h2hB) state.h2h.b = d.h2hB;

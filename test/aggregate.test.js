@@ -3,12 +3,12 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { buildDb } from '../src/build.js';
-import { aggregate, rank, opponents, headToHead, debutOrder, debutStats, lastDebuts, fromYearForRecent, selectTournaments, schoolHistory } from '../src/aggregate.js';
+import { aggregate, rank, opponents, headToHead, debutOrder, debutStats, lastDebuts, fromYearForRecent, selectTournaments, schoolHistory, draftGeneration, schoolDrafts, generationYears } from '../src/aggregate.js';
 
 const read = (p) => readFileSync(new URL(`../${p}`, import.meta.url), 'utf8');
 const { db, errors } = buildDb({
   tournamentsCsv: read('test/fixtures/tournaments.csv'), schoolsCsv: read('test/fixtures/schools.csv'),
-  entriesCsv: read('test/fixtures/entries.csv'), gamesCsv: read('test/fixtures/games.csv'),
+  entriesCsv: read('test/fixtures/entries.csv'), gamesCsv: read('test/fixtures/games.csv'), draftsCsv: read('test/fixtures/drafts.csv'),
   districts: JSON.parse(read('config/districts.json')), eras: JSON.parse(read('config/eras.json')),
 });
 const by = (rows) => Object.fromEntries(rows.map((r) => [r.key, r]));
@@ -139,4 +139,41 @@ test('元号：令和は2019年夏から（2019年春は平成）', () => {
   assert.deepEqual([...selectTournaments(mini, { era: '令和' })], ['2019N', '2020S']);
   assert.deepEqual([...selectTournaments(mini, { era: '平成' })], ['2018N', '2019S', '1989S']);
   assert.deepEqual([...selectTournaments(mini, { era: '昭和' })], ['1988N']);
+});
+
+test('世代の指名年：夏は大会年〜2年後、春は大会年〜1年後', () => {
+  assert.deepEqual(generationYears({ year: 2025, season: 'summer' }), [2025, 2026, 2027]);
+  assert.deepEqual(generationYears({ year: 2024, season: 'spring' }), [2024, 2025]);
+});
+
+test('大会時点で在籍していたドラフト指名選手（育成・拒否を含む、学年つき）', () => {
+  // 2024春の浪速学院：2024指名(3年)・2025指名(2年)。2023指名は卒業済み、2026指名は入学前
+  const s = draftGeneration(db, '2024S', 'S06');
+  assert.equal(s.count, 2);
+  assert.deepEqual(s.picks.map((d) => [d.player, d.grade]), [['山田一郎', 3], ['鈴木二郎', 2]]);
+  assert.equal(s.partial, false);
+  // 2025夏：2025(3年)・2026(2年)・2027(1年)。データの最新は2027なので確定
+  const n = draftGeneration(db, '2025N', 'S06');
+  assert.deepEqual(n.picks.map((d) => d.player), ['鈴木二郎', '佐藤三郎', '田中四郎']);
+  assert.equal(draftGeneration(db, '2025N', 'S11').count, 1);
+  assert.equal(draftGeneration(db, '2025N', 'S01').count, 0);
+});
+
+test('ドラフトのデータより前の世代は null、先の世代は partial', () => {
+  const old = { ...db, drafts: db.drafts.filter((d) => d.year >= 2025) };
+  assert.equal(draftGeneration(old, '2024S', 'S06'), null); // 3年生の指名年2024がデータ前
+  const cut = { ...db, drafts: db.drafts.filter((d) => d.year <= 2026) };
+  assert.equal(draftGeneration(cut, '2025N', 'S06').partial, true); // 1年生の指名年2027がデータ後
+});
+
+test('ランキングのドラフト指名数は期間（大会の年の範囲）内の指名を数える', () => {
+  const r = by(aggregate(db, { level: 'school' })); // 春夏の大会は2024〜2025年
+  assert.equal(r.S06.drafted, 2); // 2024・2025（2023は期間外）
+  assert.equal(r.S11.drafted, 1);
+  const p = by(aggregate(db, { level: 'prefecture' }));
+  assert.equal(p['大阪'].drafted, 2);
+  assert.deepEqual(schoolDrafts(db, { schoolId: 'S06', fromYear: 2025 }).map((d) => d.player), ['鈴木二郎']);
+  // 出場のない学校はドラフト順のときだけ並ぶ
+  const only = aggregate(db, { level: 'school', fromYear: 2025 });
+  assert.ok(!rank(only, 'wins').some((x) => x.appearances === 0));
 });

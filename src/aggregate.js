@@ -79,7 +79,7 @@ export function aggregate(db, { level = 'school', ...filter } = {}) {
   const key = keyFn(db, level, idx);
   const rows = new Map();
   const row = (k) => {
-    if (!rows.has(k)) rows.set(k, { key: k, appearances: 0, wins: 0, losses: 0, best8: 0, best4: 0, runnerUp: 0, champion: 0 });
+    if (!rows.has(k)) rows.set(k, { key: k, appearances: 0, wins: 0, losses: 0, best8: 0, best4: 0, runnerUp: 0, champion: 0, drafted: 0 });
     return rows.get(k);
   };
   const reach = stages(db, tSet);
@@ -99,13 +99,45 @@ export function aggregate(db, { level = 'school', ...filter } = {}) {
     row(key(g.tournamentId, g.winner)).wins++;
     row(key(g.tournamentId, loser)).losses++;
   }
+  // ドラフト指名数：絞り込んだ期間（大会の年の範囲）に指名された高校生。その期間に出場していない学校も数える
+  const span = yearSpan(db, tSet);
+  if (span) {
+    const dk = draftKeyFn(db, level, idx);
+    for (const d of db.drafts ?? []) if (d.year >= span[0] && d.year <= span[1]) row(dk(d.schoolId)).drafted++;
+  }
   const label = labelFn(level, idx);
   return [...rows.values()].map((r) => ({ ...r, label: label(r.key), winRate: rate(r.wins, r.losses) }));
+}
+
+/** 対象大会の年の範囲 [最小, 最大] */
+function yearSpan(db, tSet) {
+  const ys = db.tournaments.filter((t) => tSet.has(t.id)).map((t) => t.year);
+  return ys.length ? [Math.min(...ys), Math.max(...ys)] : null;
+}
+
+/** ドラフト指名を集計単位に振り分けるキー（都道府県・代表枠・地区は、その学校の最新の出場のもの） */
+function draftKeyFn(db, level, idx) {
+  if (level === 'school') return (sid) => sid;
+  const latest = new Map();
+  const tYear = new Map(db.tournaments.map((t) => [t.id, t.year]));
+  for (const e of db.entries) {
+    const cur = latest.get(e.schoolId);
+    if (!cur || tYear.get(e.tournamentId) >= tYear.get(cur.tournamentId)) latest.set(e.schoolId, e);
+  }
+  return (sid) => {
+    const e = latest.get(sid);
+    const pref = e?.prefecture || idx.school.get(sid).prefecture;
+    if (level === 'prefecture') return pref;
+    if (level === 'slot') return e?.slot || pref;
+    if (level === 'district') return db.districts[pref];
+    throw new Error(`unknown level: ${level}`);
+  };
 }
 
 /** 指標で並べ替え（勝率は最低試合数で足切りできる） */
 export function rank(rows, metric, { minGames = 0, desc = true } = {}) {
   return rows
+    .filter((r) => r.appearances > 0 || (metric === 'drafted' && r.drafted > 0)) // 期間内に出場のない学校はドラフト順のときだけ出す
     .filter((r) => metric !== 'winRate' || (r.winRate !== null && r.wins + r.losses >= minGames))
     .sort((x, y) => (desc ? (y[metric] ?? -1) - (x[metric] ?? -1) : (x[metric] ?? -1) - (y[metric] ?? -1))
       || (y.winRate ?? -1) - (x.winRate ?? -1) || y.wins - x.wins); // 同値は勝率→勝ち星で並べる
@@ -218,4 +250,51 @@ export function lastDebuts(db, filter = {}) {
   const byT = new Map();
   for (const d of all) if (!byT.has(d.tournament.id) || byT.get(d.tournament.id).order < d.order) byT.set(d.tournament.id, d);
   return [...byT.values()].sort((x, y) => y.tournament.year - x.tournament.year);
+}
+
+// ---------- ドラフト（高校からの指名。育成・入団拒否を含む） ----------
+const draftCache = new WeakMap();
+function draftIndex(db) {
+  if (!draftCache.has(db)) {
+    const bySchool = new Map();
+    for (const d of db.drafts ?? []) {
+      if (!bySchool.has(d.schoolId)) bySchool.set(d.schoolId, []);
+      bySchool.get(d.schoolId).push(d);
+    }
+    const ys = (db.drafts ?? []).map((d) => d.year);
+    draftCache.set(db, { bySchool, tMap: new Map(db.tournaments.map((t) => [t.id, t])), from: ys.length ? Math.min(...ys) : null, to: ys.length ? Math.max(...ys) : null });
+  }
+  return draftCache.get(db);
+}
+
+/**
+ * 大会の時点で在籍していた選手の指名年。高校3年の秋に指名されるので、
+ * 夏は1〜3年生（指名年＝大会の年〜2年後）、春（3月）は新2・3年生（大会の年〜1年後）。
+ */
+export const generationYears = (t) => Array.from({ length: t.season === 'spring' ? 2 : 3 }, (_, i) => t.year + i);
+
+/**
+ * その大会の時点でその学校に在籍していた、のちのドラフト指名選手（ベンチ入りかどうかは問わない）。
+ * 3年生の指名年がデータより前なら null。下級生の指名年がデータより先なら partial（今後のドラフトで増えうる）。
+ */
+export function draftGeneration(db, tournamentId, schoolId) {
+  const { bySchool, tMap, from, to } = draftIndex(db);
+  const t = tMap.get(tournamentId);
+  if (!t || from === null) return null;
+  const ys = generationYears(t);
+  if (ys[0] < from) return null;
+  const picks = (bySchool.get(schoolId) ?? [])
+    .filter((d) => ys.includes(d.year))
+    .map((d) => ({ ...d, grade: 3 - (d.year - t.year) }))
+    .sort((x, y) => y.grade - x.grade || x.year - y.year);
+  return { count: picks.length, picks, partial: ys.at(-1) > to };
+}
+
+/** 学校のドラフト指名一覧（絞り込んだ期間の年の範囲、新しい順） */
+export function schoolDrafts(db, { schoolId, ...filter }) {
+  const span = yearSpan(db, selectTournaments(db, filter));
+  if (!span) return [];
+  return (draftIndex(db).bySchool.get(schoolId) ?? [])
+    .filter((d) => d.year >= span[0] && d.year <= span[1])
+    .sort((x, y) => y.year - x.year || (x.kind === y.kind ? (x.round ?? 99) - (y.round ?? 99) : x.kind === 'regular' ? -1 : 1));
 }

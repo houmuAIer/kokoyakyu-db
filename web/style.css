@@ -155,3 +155,11 @@ td .circled { display: inline-block; min-width: 1.9em; padding: 1px 7px; border-
   .bar { width: 96px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* ドラフト（在籍していたのちの指名選手） */
+.draft-gen { margin-left: 6px; padding: 0 6px; border: 1px solid var(--seam); border-radius: 999px; background: var(--seam-soft); color: var(--seam); font: inherit; font-size: .72rem; font-weight: 700; line-height: 1.5; cursor: pointer; white-space: nowrap; }
+.draft-gen.zero { border-color: var(--line-strong); background: transparent; color: var(--ink-soft); font-weight: 400; }
+.draft-gen.open { background: var(--seam); color: #fff; }
+.gen-detail td { background: var(--seam-soft); font-size: .85rem; text-align: left; }
+.gen-list { margin: 4px 0 0; padding-left: 1.2em; }
+.draft-declined { margin-left: 6px; padding: 0 5px; border-radius: 4px; background: var(--ink-soft); color: #fff; font-size: .72rem; }

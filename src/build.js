@@ -4,10 +4,12 @@ import { parseCsv } from './csv.js';
 export const ROUNDS = ['R1', 'R2', 'R3', 'QF', 'SF', 'F'];
 const SEASONS = ['spring', 'summer', 'exchange'];
 const TYPES = ['normal', 'draw', 'forfeit', 'exchange'];
+const DRAFT_KINDS = ['regular', 'development'];
+const DRAFT_STATUS = ['signed', 'declined', 'canceled', 'unknown'];
 
 const int = (v) => (v === '' ? null : Number.parseInt(v, 10));
 
-export function buildDb({ tournamentsCsv, schoolsCsv, entriesCsv, gamesCsv, districts, eras }) {
+export function buildDb({ tournamentsCsv, schoolsCsv, entriesCsv, gamesCsv, draftsCsv = '', districts, eras }) {
   const errors = [];
   const err = (m) => errors.push(m);
 
@@ -25,6 +27,11 @@ export function buildDb({ tournamentsCsv, schoolsCsv, entriesCsv, gamesCsv, dist
     a: g.school_a, scoreA: int(g.score_a), b: g.school_b, scoreB: int(g.score_b),
     winner: g.winner || null, type: g.type, replayOf: g.replay_of || null,
   }));
+
+  const drafts = draftsCsv ? parseCsv(draftsCsv).map((d) => ({
+    year: int(d.draft_year), team: d.team, kind: d.kind, round: int(d.round ?? ''), player: d.player,
+    schoolId: d.school_id, affiliation: d.affiliation, status: d.status,
+  })) : [];
 
   const tMap = new Map(), sMap = new Map(), eKey = new Set(), gIds = new Set();
   for (const t of tournaments) {
@@ -70,8 +77,15 @@ export function buildDb({ tournamentsCsv, schoolsCsv, entriesCsv, gamesCsv, dist
     }
     if (g.replayOf && !games.some((x) => x.id === g.replayOf && x.type === 'draw')) err(`試合${g.id}: replay_ofが引き分け試合を指していない`);
   }
+  for (const d of drafts) {
+    const tag = `ドラフト${d.year} ${d.player}`;
+    if (!Number.isInteger(d.year)) err(`${tag}: 年が不正`);
+    if (!sMap.has(d.schoolId)) err(`${tag}: 学校が存在しない ${d.schoolId}`);
+    if (!DRAFT_KINDS.includes(d.kind)) err(`${tag}: kind不正 ${d.kind}`);
+    if (!DRAFT_STATUS.includes(d.status)) err(`${tag}: status不正 ${d.status}`);
+  }
   if (!errors.length) checkBrackets({ tournaments, entries, games }, err);
-  return { db: { tournaments, schools, entries, games, districts, eras }, errors };
+  return { db: { tournaments, schools, entries, games, drafts, districts, eras }, errors };
 }
 
 /** トーナメントとしての整合性（転記ミスの検出用） */
