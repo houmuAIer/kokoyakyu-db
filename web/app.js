@@ -87,10 +87,14 @@ function gameRows(games, selfKeyFn) {
 function selCell(h) {
   if (h.tournament.season !== 'spring') return '';
   const tag = h.selection ? `<span class="sel-tag">${esc(h.selection)}</span>` : '';
-  const reg = h.regional ? `${esc(h.regional.region)}大会 ${esc(h.regional.result)}` : '<span class="subtle" title="前年秋の地区大会の成績が分かっていない">—</span>';
+  const r = h.regional;
+  const pref = h.pref ? `（県${esc(h.pref)}）` : '';
+  const reg = !r ? '<span class="subtle" title="前年秋の地区大会の成績が分かっていない">—</span>'
+    : r.result === '不出場' ? `<span title="出典: ${esc(r.source)}">地区大会 不出場${pref}</span>`
+    : `<span title="出典: ${esc(r.source)}">${esc(r.region)}大会 ${esc(r.result)}${pref}</span>`;
   return `${tag}${reg}`;
 }
-const SEL_NOTE = '<p class="note">「選考（春）」は、センバツの選考区分（21世紀枠・希望枠）と前年秋の地区大会の成績です。地区大会の成績は Wikipedia の地区大会の記事から取った優勝・準優勝（東海・近畿・四国はベスト4まで。関東は優勝のみ）で、ベスト4・ベスト8などは順次追加中です。「—」は未確認。</p>';
+const SEL_NOTE = '<p class="note">「選考（春）」は、センバツの選考区分（21世紀枠・希望枠）と前年秋の地区大会の成績です（「出場」は8強に届かなかったもの、カッコ内は秋の都道府県大会の成績で21世紀枠のみ）。2002年以降はほぼ全校、それより前は優勝・準優勝などが中心です。出典は Wikipedia の地区大会の記事を優先し、足りない分を球歴.com の試合結果・夢託備忘録などで補っています（成績にカーソルを当てると出典名）。「—」は未確認。</p>';
 
 /** 当時の校名で、学校ページへのリンク */
 const schoolLink = (tid, sid) => `<button class="link quiet" data-school="${esc(sid)}">${esc(entryName(tid, sid))}</button>`;

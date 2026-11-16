@@ -1,1 +1,1842 @@
-{ "note": "センバツ出場校の前年秋の地区大会の成績で、Wikipediaの地区大会の記事に載っていないもの（ベスト4・ベスト8など）。entries のキーは大会ID → 当時の校名。result は 優勝/準優勝/4強/8強/出場、region は地区名、source は出典。", "entries": {} }
+{
+ "note": "センバツ出場校の前年秋の地区大会の成績で、Wikipediaの地区大会の記事に載っていないもの。regional は地区大会ごとの結果（year は秋の大会の年。champion/runnerUp/semis/quarters）で、entries は学校ごとの補正（大会ID → 当時の校名 → {result, region, source}）。result は 優勝/準優勝/4強/8強/出場/不出場。 schools は学校ごとの出典つきの成績（spring は春の大会ID、name は当時の校名か略称、pref は秋の都道府県大会の成績）。",
+ "entries": {},
+ "regional": [
+  {
+   "year": 2025,
+   "region": "関東",
+   "champion": "山梨学院",
+   "runnerUp": "花咲徳栄",
+   "semis": [
+    "専大松戸",
+    "佐野日大"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2024,
+   "region": "関東",
+   "champion": "横浜",
+   "runnerUp": "健大高崎",
+   "semis": [
+    "浦和実業",
+    "千葉黎明"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2023,
+   "region": "関東",
+   "champion": "作新学院",
+   "runnerUp": "山梨学院",
+   "semis": [
+    "常総学院",
+    "健大高崎"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2022,
+   "region": "関東",
+   "champion": "山梨学院",
+   "runnerUp": "専大松戸",
+   "semis": [
+    "健大高崎",
+    "慶應義塾"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2021,
+   "region": "関東",
+   "champion": "明秀日立",
+   "runnerUp": "山梨学院",
+   "semis": [
+    "木更津総合",
+    "浦和学院"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2020,
+   "region": "関東",
+   "champion": "健大高崎",
+   "runnerUp": "常総学院",
+   "semis": [
+    "専修大松戸",
+    "東海大甲府"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2019,
+   "region": "関東",
+   "champion": "健大高崎",
+   "runnerUp": "山梨学院",
+   "semis": [
+    "東海大相模",
+    "桐生第一"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2018,
+   "region": "関東",
+   "champion": "桐蔭学園",
+   "runnerUp": "春日部共栄",
+   "semis": [
+    "習志野",
+    "山梨学院"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2017,
+   "region": "関東",
+   "champion": "中央学院",
+   "runnerUp": "明秀日立",
+   "semis": [
+    "東海大相模",
+    "慶應義塾"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2016,
+   "region": "関東",
+   "champion": "作新学院",
+   "runnerUp": "東海大望洋",
+   "semis": [
+    "健大高崎",
+    "前橋育英"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2015,
+   "region": "関東",
+   "champion": "木更津総合",
+   "runnerUp": "常総学院",
+   "semis": [
+    "東海大甲府",
+    "桐生第一"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2014,
+   "region": "関東",
+   "champion": "浦和学院",
+   "runnerUp": "木更津総合",
+   "semis": [
+    "健大高崎",
+    "常総学院"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2013,
+   "region": "関東",
+   "champion": "白鴎大足利",
+   "runnerUp": "桐生第一",
+   "semis": [
+    "山梨学院大付",
+    "佐野日大"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2012,
+   "region": "関東",
+   "champion": "浦和学院",
+   "runnerUp": "花咲徳栄",
+   "semis": [
+    "宇都宮商業",
+    "常総学院"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2011,
+   "region": "関東",
+   "champion": "浦和学院",
+   "runnerUp": "作新学院",
+   "semis": [
+    "健大高崎",
+    "高崎"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2010,
+   "region": "関東",
+   "champion": "浦和学院",
+   "runnerUp": "東海大相模",
+   "semis": [
+    "横浜",
+    "水城"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2009,
+   "region": "関東",
+   "champion": "東海大相模",
+   "runnerUp": "花咲徳栄",
+   "semis": [
+    "前橋工業",
+    "東海大望洋"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2008,
+   "region": "関東",
+   "champion": "慶應義塾",
+   "runnerUp": "習志野",
+   "semis": [
+    "前橋商業",
+    "高崎商業"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2007,
+   "region": "関東",
+   "champion": "横浜",
+   "runnerUp": "慶應義塾",
+   "semis": [
+    "水戸商業",
+    "聖望学園"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2006,
+   "region": "関東",
+   "champion": "千葉経大付",
+   "runnerUp": "佐野日大",
+   "semis": [
+    "日大藤沢",
+    "桐生第一"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2005,
+   "region": "関東",
+   "champion": "成田",
+   "runnerUp": "高崎商業",
+   "semis": [
+    "東海大相模",
+    "横浜"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2004,
+   "region": "関東",
+   "champion": "東海大相模",
+   "runnerUp": "浦和学院",
+   "semis": [
+    "甲府工業",
+    "常総学院"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2003,
+   "region": "関東",
+   "champion": "土浦湖北",
+   "runnerUp": "拓大紅陵",
+   "semis": [
+    "甲府工業",
+    "桐生第一"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2002,
+   "region": "関東",
+   "champion": "横浜",
+   "runnerUp": "浦和学院",
+   "semis": [
+    "花咲徳栄",
+    "藤代"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  },
+  {
+   "year": 2001,
+   "region": "関東",
+   "champion": "宇都宮工業",
+   "runnerUp": "浦和学院",
+   "semis": [
+    "前橋",
+    "太田市商業"
+   ],
+   "source": "https://www.baseball-station.com/fall/kanto/index2.php（秋季関東大会 歴代ベスト4）"
+  }
+ ],
+ "schools": [
+  {
+   "spring": "2010S",
+   "name": "前橋工",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2010S",
+   "name": "花咲徳栄",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2010S",
+   "name": "東海大望洋",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2010S",
+   "name": "東海大相模",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2010S",
+   "name": "帝京",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2010S",
+   "name": "日大三",
+   "result": "4強",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2009S",
+   "name": "下妻二",
+   "result": "8強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2009S",
+   "name": "高崎商",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2009S",
+   "name": "前橋商",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2009S",
+   "name": "習志野",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2009S",
+   "name": "慶応",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2009S",
+   "name": "国士舘",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2009S",
+   "name": "早稲田実",
+   "result": "準優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2008S",
+   "name": "水戸商",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2008S",
+   "name": "宇都宮南",
+   "result": "8強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2008S",
+   "name": "聖望学園",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2008S",
+   "name": "千葉経大付",
+   "result": "8強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2008S",
+   "name": "横浜",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2008S",
+   "name": "慶応",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2008S",
+   "name": "関東一",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2007S",
+   "name": "佐野日大",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2007S",
+   "name": "桐生第一",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2007S",
+   "name": "千葉経大付",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2007S",
+   "name": "成田",
+   "result": "8強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2007S",
+   "name": "日大藤沢",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2007S",
+   "name": "帝京",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2006S",
+   "name": "高崎商",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2006S",
+   "name": "成田",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2006S",
+   "name": "横浜",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2006S",
+   "name": "東海大相模",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2006S",
+   "name": "早稲田実",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2006S",
+   "name": "東海大菅生",
+   "result": "準優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2005S",
+   "name": "常総学院",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2005S",
+   "name": "浦和学院",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2005S",
+   "name": "東海大相模",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2005S",
+   "name": "慶応",
+   "result": "8強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2005S",
+   "name": "甲府工",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2005S",
+   "name": "修徳",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2004S",
+   "name": "土浦湖北",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2004S",
+   "name": "作新学院",
+   "result": "8強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2004S",
+   "name": "桐生第一",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2004S",
+   "name": "拓大紅陵",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2004S",
+   "name": "甲府工",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2004S",
+   "name": "二松学舎大付",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2003S",
+   "name": "藤代",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2003S",
+   "name": "浦和学院",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2003S",
+   "name": "花咲徳栄",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2003S",
+   "name": "横浜",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2003S",
+   "name": "桐蔭学園",
+   "result": "8強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2003S",
+   "name": "国士舘",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2002S",
+   "name": "水戸短大付",
+   "result": "8強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2002S",
+   "name": "宇都宮工",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2002S",
+   "name": "前橋",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2002S",
+   "name": "浦和学院",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2002S",
+   "name": "日大三",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2002S",
+   "name": "二松学舎大付",
+   "result": "準優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no1/（夢託備忘録 歴代選抜選考結果 関東・東京 その1）"
+  },
+  {
+   "spring": "2019S",
+   "name": "春日部共栄",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2019S",
+   "name": "習志野",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2019S",
+   "name": "桐蔭学園",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2019S",
+   "name": "横浜",
+   "result": "8強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2019S",
+   "name": "山梨学院",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2019S",
+   "name": "国士舘",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2018S",
+   "name": "明秀日立",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2018S",
+   "name": "国学院栃木",
+   "result": "8強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2018S",
+   "name": "中央学院",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2018S",
+   "name": "東海大相模",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2018S",
+   "name": "慶応",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2018S",
+   "name": "日大三",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2017S",
+   "name": "作新学院",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2017S",
+   "name": "前橋育英",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2017S",
+   "name": "健大高崎",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2017S",
+   "name": "東海大市原望洋",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2017S",
+   "name": "早稲田実",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2017S",
+   "name": "日大三",
+   "result": "準優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2016S",
+   "name": "常総学院",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2016S",
+   "name": "桐生第一",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2016S",
+   "name": "花咲徳栄",
+   "result": "8強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2016S",
+   "name": "木更津総合",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2016S",
+   "name": "東海大甲府",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2016S",
+   "name": "関東一",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2015S",
+   "name": "常総学院",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2015S",
+   "name": "健大高崎",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2015S",
+   "name": "浦和学院",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2015S",
+   "name": "木更津総合",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2015S",
+   "name": "東海大菅生",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2015S",
+   "name": "二松学舎大付",
+   "result": "準優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2014S",
+   "name": "白鷗大足利",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2014S",
+   "name": "佐野日大",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2014S",
+   "name": "桐生第一",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2014S",
+   "name": "横浜",
+   "result": "8強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2014S",
+   "name": "山梨学院大付",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2014S",
+   "name": "関東一",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2013S",
+   "name": "常総学院",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2013S",
+   "name": "宇都宮商",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2013S",
+   "name": "浦和学院",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2013S",
+   "name": "花咲徳栄",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2013S",
+   "name": "安田学園",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2013S",
+   "name": "早稲田実",
+   "result": "準優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2012S",
+   "name": "作新学院",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2012S",
+   "name": "健大高崎",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2012S",
+   "name": "高崎",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2012S",
+   "name": "浦和学院",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2012S",
+   "name": "横浜",
+   "result": "8強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2012S",
+   "name": "関東一",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2011S",
+   "name": "水城",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2011S",
+   "name": "前橋育英",
+   "result": "8強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2011S",
+   "name": "浦和学院",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2011S",
+   "name": "東海大相模",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2011S",
+   "name": "横浜",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2011S",
+   "name": "国学院久我山",
+   "result": "準優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no2/（同 その2）"
+  },
+  {
+   "spring": "2026S",
+   "name": "佐野日大",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2026S",
+   "name": "花咲徳栄",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2026S",
+   "name": "専大松戸",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2026S",
+   "name": "横浜",
+   "result": "8強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2026S",
+   "name": "山梨学院",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2026S",
+   "name": "帝京",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2025S",
+   "name": "健大高崎",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2025S",
+   "name": "浦和実",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2025S",
+   "name": "千葉黎明",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2025S",
+   "name": "横浜",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2025S",
+   "name": "山梨学院",
+   "result": "8強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2025S",
+   "name": "二松学舎大付",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2025S",
+   "name": "早稲田実",
+   "result": "準優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2024S",
+   "name": "常総学院",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2024S",
+   "name": "作新学院",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2024S",
+   "name": "健大高崎",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2024S",
+   "name": "中央学院",
+   "result": "8強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2024S",
+   "name": "山梨学院",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2024S",
+   "name": "関東一",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2023S",
+   "name": "作新学院",
+   "result": "8強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2023S",
+   "name": "健大高崎",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2023S",
+   "name": "専大松戸",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2023S",
+   "name": "慶応",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2023S",
+   "name": "山梨学院",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2023S",
+   "name": "東海大菅生",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2023S",
+   "name": "二松学舎大付",
+   "result": "準優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2022S",
+   "name": "明秀日立",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2022S",
+   "name": "浦和学院",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2022S",
+   "name": "木更津総合",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2022S",
+   "name": "山梨学院",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2022S",
+   "name": "国学院久我山",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2022S",
+   "name": "二松学舎大付",
+   "result": "準優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2021S",
+   "name": "常総学院",
+   "result": "準優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2021S",
+   "name": "健大高崎",
+   "result": "優勝",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2021S",
+   "name": "専大松戸",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2021S",
+   "name": "東海大相模",
+   "result": "8強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2021S",
+   "name": "東海大甲府",
+   "result": "4強",
+   "region": "関東",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2021S",
+   "name": "東海大菅生",
+   "result": "優勝",
+   "region": "東京",
+   "source": "https://yumetaku.com/senbatsu-kantou-toukyou-no3/（同 その3）"
+  },
+  {
+   "spring": "2021S",
+   "name": "八戸西",
+   "region": "東北",
+   "result": "8強",
+   "source": "https://yumetaku.com/senbatu21-touhoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2017S",
+   "name": "不来方",
+   "region": "東北",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-touhoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2016S",
+   "name": "釜石",
+   "region": "東北",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-touhoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2004S",
+   "name": "一関一",
+   "region": "東北",
+   "result": "4強",
+   "source": "https://yumetaku.com/senbatu21-touhoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2018S",
+   "name": "由利工",
+   "region": "東北",
+   "result": "8強",
+   "source": "https://yumetaku.com/senbatu21-touhoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "3位"
+  },
+  {
+   "spring": "2011S",
+   "name": "大館鳳鳴",
+   "region": "東北",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-touhoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "優勝"
+  },
+  {
+   "spring": "2010S",
+   "name": "山形中央",
+   "region": "東北",
+   "result": "8強",
+   "source": "https://yumetaku.com/senbatu21-touhoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2012S",
+   "name": "石巻工",
+   "region": "東北",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-touhoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2009S",
+   "name": "利府",
+   "region": "東北",
+   "result": "4強",
+   "source": "https://yumetaku.com/senbatu21-touhoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2005S",
+   "name": "一迫商",
+   "region": "東北",
+   "result": "4強",
+   "source": "https://yumetaku.com/senbatu21-touhoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2022S",
+   "name": "只見",
+   "region": "東北",
+   "result": "不出場",
+   "source": "https://yumetaku.com/senbatu21-touhoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "8強"
+  },
+  {
+   "spring": "2013S",
+   "name": "いわき海星",
+   "region": "東北",
+   "result": "不出場",
+   "source": "https://yumetaku.com/senbatu21-touhoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "16強"
+  },
+  {
+   "spring": "2006S",
+   "name": "真岡工",
+   "region": "関東",
+   "result": "8強",
+   "source": "https://yumetaku.com/senbatu21-kantou/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2007S",
+   "name": "都留",
+   "region": "関東",
+   "result": "8強",
+   "source": "https://yumetaku.com/senbatu21-kantou/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2008S",
+   "name": "安房",
+   "region": "関東",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-kantou/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2014S",
+   "name": "小山台",
+   "region": "東京",
+   "result": "8強",
+   "source": "https://yumetaku.com/senbatu21-kantou/（夢託備忘録 歴代21世紀枠）"
+  },
+  {
+   "spring": "2019S",
+   "name": "石岡一",
+   "region": "関東",
+   "result": "不出場",
+   "source": "https://yumetaku.com/senbatu21-kantou/（夢託備忘録 歴代21世紀枠）",
+   "pref": "4強"
+  },
+  {
+   "spring": "2023S",
+   "name": "石橋",
+   "region": "関東",
+   "result": "不出場",
+   "source": "https://yumetaku.com/senbatu21-kantou/（夢託備忘録 歴代21世紀枠）",
+   "pref": "4位"
+  },
+  {
+   "spring": "2021S",
+   "name": "三島南",
+   "region": "東海",
+   "result": "不出場",
+   "source": "https://yumetaku.com/senbatu21-toukai/（夢託備忘録 歴代21世紀枠）",
+   "pref": "4位"
+  },
+  {
+   "spring": "2008S",
+   "name": "成章",
+   "region": "東海",
+   "result": "不出場",
+   "source": "https://yumetaku.com/senbatu21-toukai/（夢託備忘録 歴代21世紀枠）",
+   "pref": "4位"
+  },
+  {
+   "spring": "2015S",
+   "name": "豊橋工",
+   "region": "東海",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-toukai/（夢託備忘録 歴代21世紀枠）",
+   "pref": "3位"
+  },
+  {
+   "spring": "2017S",
+   "name": "多治見",
+   "region": "東海",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-toukai/（夢託備忘録 歴代21世紀枠）",
+   "pref": "優勝"
+  },
+  {
+   "spring": "2003S",
+   "name": "柏崎",
+   "region": "北信越",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-hokushinetsu/（夢託備忘録 歴代21世紀枠）",
+   "pref": "3位"
+  },
+  {
+   "spring": "2006S",
+   "name": "金沢桜丘",
+   "region": "北信越",
+   "result": "4強",
+   "source": "https://yumetaku.com/senbatu21-hokushinetsu/（夢託備忘録 歴代21世紀枠）",
+   "pref": "優勝"
+  },
+  {
+   "spring": "2011S",
+   "name": "佐渡",
+   "region": "北信越",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-hokushinetsu/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2022S",
+   "name": "丹生",
+   "region": "北信越",
+   "result": "不出場",
+   "source": "https://yumetaku.com/senbatu21-hokushinetsu/（夢託備忘録 歴代21世紀枠）",
+   "pref": "4位"
+  },
+  {
+   "spring": "2023S",
+   "name": "氷見",
+   "region": "北信越",
+   "result": "8強",
+   "source": "https://yumetaku.com/senbatu21-hokushinetsu/（夢託備忘録 歴代21世紀枠）",
+   "pref": "優勝"
+  },
+  {
+   "spring": "2002S",
+   "name": "松江北",
+   "region": "中国",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-tyugoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "3位"
+  },
+  {
+   "spring": "2003S",
+   "name": "隠岐",
+   "region": "中国",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-tyugoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "優勝"
+  },
+  {
+   "spring": "2008S",
+   "name": "華陵",
+   "region": "中国",
+   "result": "4強",
+   "source": "https://yumetaku.com/senbatu21-tyugoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "優勝"
+  },
+  {
+   "spring": "2013S",
+   "name": "益田翔陽",
+   "region": "中国",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-tyugoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "優勝"
+  },
+  {
+   "spring": "2004S",
+   "name": "八幡浜",
+   "region": "四国",
+   "result": "4強",
+   "source": "https://yumetaku.com/senbatu21-shikoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2005S",
+   "name": "高松",
+   "region": "四国",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-shikoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2010S",
+   "name": "川島",
+   "region": "四国",
+   "result": "8強",
+   "source": "https://yumetaku.com/senbatu21-shikoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "3位"
+  },
+  {
+   "spring": "2011S",
+   "name": "城南",
+   "region": "四国",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-shikoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "優勝"
+  },
+  {
+   "spring": "2013S",
+   "name": "土佐",
+   "region": "四国",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-shikoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "3位"
+  },
+  {
+   "spring": "2015S",
+   "name": "松山東",
+   "region": "四国",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-shikoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2016S",
+   "name": "小豆島",
+   "region": "四国",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-shikoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "優勝"
+  },
+  {
+   "spring": "2017S",
+   "name": "中村",
+   "region": "四国",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-shikoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "優勝"
+  },
+  {
+   "spring": "2019S",
+   "name": "富岡西",
+   "region": "四国",
+   "result": "4強",
+   "source": "https://yumetaku.com/senbatu21-shikoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "3位"
+  },
+  {
+   "spring": "2023S",
+   "name": "城東",
+   "region": "四国",
+   "result": "不出場",
+   "source": "https://yumetaku.com/senbatu21-shikoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "4位"
+  },
+  {
+   "spring": "2026S",
+   "name": "高知農",
+   "region": "四国",
+   "result": "不出場",
+   "source": "https://yumetaku.com/senbatu21-shikoku/（夢託備忘録 歴代21世紀枠）",
+   "pref": "8強"
+  },
+  {
+   "spring": "2007S",
+   "name": "都城泉ヶ丘",
+   "region": "九州",
+   "result": "8強",
+   "source": "https://yumetaku.com/senbatu21-kyusyu/（夢託備忘録 歴代21世紀枠）",
+   "pref": "優勝"
+  },
+  {
+   "spring": "2009S",
+   "name": "大分上野丘",
+   "region": "九州",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-kyusyu/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2014S",
+   "name": "大島",
+   "region": "九州",
+   "result": "不出場",
+   "source": "https://yumetaku.com/senbatu21-kyusyu/（夢託備忘録 歴代21世紀枠）",
+   "pref": "4強"
+  },
+  {
+   "spring": "2018S",
+   "name": "伊万里",
+   "region": "九州",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-kyusyu/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2019S",
+   "name": "熊本西",
+   "region": "九州",
+   "result": "8強",
+   "source": "https://yumetaku.com/senbatu21-kyusyu/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2021S",
+   "name": "具志川商",
+   "region": "九州",
+   "result": "8強",
+   "source": "https://yumetaku.com/senbatu21-kyusyu/（夢託備忘録 歴代21世紀枠）",
+   "pref": "優勝"
+  },
+  {
+   "spring": "2022S",
+   "name": "大分舞鶴",
+   "region": "九州",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-kyusyu/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2025S",
+   "name": "壱岐",
+   "region": "九州",
+   "result": "8強",
+   "source": "https://yumetaku.com/senbatu21-kyusyu/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2026S",
+   "name": "長崎西",
+   "region": "九州",
+   "result": "8強",
+   "source": "https://yumetaku.com/senbatu21-kyusyu/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2002S",
+   "name": "鵡川",
+   "region": "北海道",
+   "result": "8強",
+   "source": "https://yumetaku.com/senbatu21-area/（夢託備忘録 歴代21世紀枠）"
+  },
+  {
+   "spring": "2012S",
+   "name": "女満別",
+   "region": "北海道",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-area/（夢託備忘録 歴代21世紀枠）"
+  },
+  {
+   "spring": "2013S",
+   "name": "遠軽",
+   "region": "北海道",
+   "result": "4強",
+   "source": "https://yumetaku.com/senbatu21-area/（夢託備忘録 歴代21世紀枠）"
+  },
+  {
+   "spring": "2024S",
+   "name": "別海",
+   "region": "北海道",
+   "result": "4強",
+   "source": "https://yumetaku.com/senbatu21-area/（夢託備忘録 歴代21世紀枠）"
+  },
+  {
+   "spring": "2009S",
+   "name": "彦根東",
+   "region": "近畿",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-kinki/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2018S",
+   "name": "膳所",
+   "region": "近畿",
+   "result": "不出場",
+   "source": "https://yumetaku.com/senbatu21-kinki/（夢託備忘録 歴代21世紀枠）",
+   "pref": "8強"
+  },
+  {
+   "spring": "2021S",
+   "name": "東播磨",
+   "region": "近畿",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-kinki/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2016S",
+   "name": "長田",
+   "region": "近畿",
+   "result": "不出場",
+   "source": "https://yumetaku.com/senbatu21-kinki/（夢託備忘録 歴代21世紀枠）",
+   "pref": "8強"
+  },
+  {
+   "spring": "2012S",
+   "name": "洲本",
+   "region": "近畿",
+   "result": "不出場",
+   "source": "https://yumetaku.com/senbatu21-kinki/（夢託備忘録 歴代21世紀枠）",
+   "pref": "4位"
+  },
+  {
+   "spring": "2010S",
+   "name": "向陽",
+   "region": "近畿",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-kinki/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2014S",
+   "name": "海南",
+   "region": "近畿",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-kinki/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2015S",
+   "name": "桐蔭",
+   "region": "近畿",
+   "result": "不出場",
+   "source": "https://yumetaku.com/senbatu21-kinki/（夢託備忘録 歴代21世紀枠）",
+   "pref": "8強"
+  },
+  {
+   "spring": "2024S",
+   "name": "田辺",
+   "region": "近畿",
+   "result": "出場",
+   "source": "https://yumetaku.com/senbatu21-kinki/（夢託備忘録 歴代21世紀枠）",
+   "pref": "準優勝"
+  },
+  {
+   "spring": "2002S",
+   "name": "三木",
+   "region": "近畿",
+   "result": "8強",
+   "pref": "準優勝",
+   "source": "https://yumetaku.com/senbatu21-kinki/（夢託備忘録 歴代21世紀枠 近畿の推薦校一覧。三木は21世紀枠の兵庫県推薦校で、一般選考で選出）"
+  },
+  {
+   "spring": "2025S",
+   "name": "横浜清陵",
+   "region": "関東",
+   "result": "不出場",
+   "pref": "8強",
+   "source": "https://www.kanaloco.jp/sports/baseball/hsbaseball/article-1125703.html（神奈川新聞 2024-11-14：秋季県大会は準々決勝で東海大相模に0-5で敗退）"
+  }
+ ]
+}

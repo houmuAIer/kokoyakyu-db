@@ -63,6 +63,21 @@
 | route | `hs`（高校から） / `later`（大学・社会人・独立リーグなどを経て） |
 | class_year | 高校3年の夏の年。高卒は指名年と同じ。大社は生年月日から（4月2日〜翌4月1日生まれが同じ学年） |
 
+## spring-extra.csv（センバツの選考区分と前年秋の地区大会の成績）
+
+センバツの出場（entries.csv の spring の行）ごとに1行。`node scripts/import-spring-extra.js` で作り直す。
+
+| 列 | 内容 |
+|---|---|
+| tournament_id / school_id | entries.csv と同じ |
+| selection | `一般` / `21世紀枠` / `希望枠`（大会記事の選出校表から） |
+| region | 前年秋に出た地区大会（北海道・東北・関東・東京・北信越・東海・近畿・中国・四国・九州。古い年は中部など当時の地区） |
+| result | `優勝` / `準優勝` / `4強` / `8強` / `出場`（8強に届かず） / `不出場`（地区大会に出ていない。21世紀枠など） / 空欄（未確認） |
+| pref_result | 秋の都道府県大会の成績（21世紀枠のみ。例 `準優勝`・`8強`） |
+| source | 出典（URL または Wikipedia の記事） |
+
+出典の優先順位：Wikipedia の地区大会の記事 → config/spring-regional.json（出典つきの地区大会の結果・学校ごとの成績）→ config/kyureki-regional.json（球歴.com の試合結果から起こした地区大会の成績）。
+
 ## 集計ルール
 
 - 勝敗に数えるのは `type=normal` のみ。引き分け・不戦勝・辞退・交流試合は数えない。

@@ -9,6 +9,10 @@ const DRAFT_STATUS = ['signed', 'declined', 'canceled', 'unknown'];
 
 const int = (v) => (v === '' ? null : Number.parseInt(v, 10));
 
+/** 出典の短い表示名（spring-extra.csv の source から） */
+const sourceLabel = (src = '') => (/kyureki/.test(src) ? '球歴.com' : /yumetaku/.test(src) ? '夢託備忘録' : /baseball-station/.test(src) ? 'ベースボールステーション'
+  : /kanaloco/.test(src) ? '神奈川新聞' : /Wikipedia/.test(src) ? 'Wikipedia' : src ? 'その他' : '');
+
 export function buildDb({ tournamentsCsv, schoolsCsv, entriesCsv, gamesCsv, draftsCsv = '', springExtraCsv = '', districts, eras }) {
   const errors = [];
   const err = (m) => errors.push(m);
@@ -84,9 +88,10 @@ export function buildDb({ tournamentsCsv, schoolsCsv, entriesCsv, gamesCsv, draf
     const e = entryByKey.get(`${x.tournament_id}|${x.school_id}`);
     if (!e) { err(`spring-extra: 出場がない ${x.tournament_id}|${x.school_id}`); continue; }
     if (!['一般', '21世紀枠', '希望枠'].includes(x.selection)) err(`spring-extra: 区分不正 ${x.selection}`);
-    if (x.result && !['優勝', '準優勝', '4強', '8強', '出場'].includes(x.result)) err(`spring-extra: 成績不正 ${x.result}`);
+    if (x.result && !['優勝', '準優勝', '4強', '8強', '出場', '不出場'].includes(x.result)) err(`spring-extra: 成績不正 ${x.result}`);
     e.selection = x.selection;
-    if (x.result) { e.regionalRegion = x.region; e.regionalResult = x.result; }
+    if (x.result) { e.regionalRegion = x.region; e.regionalResult = x.result; e.regionalSource = sourceLabel(x.source); }
+    if (x.pref_result) e.prefResult = x.pref_result;
   }
   for (const d of drafts) {
     const tag = `ドラフト${d.year} ${d.player}`;

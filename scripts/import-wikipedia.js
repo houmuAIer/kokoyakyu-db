@@ -25,6 +25,12 @@ async function fetchRaw(title, depth = 0) {
 }
 async function wikitext(src) {
   const path = p(`raw/${src.id}.wiki`);
+  if (!existsSync(path) && src.oldid) {
+    // 荒らし・誤記のある版を避けるため、版を固定している大会（config/sources.json の oldid）
+    const res = await fetch(`https://ja.wikipedia.org/w/index.php?oldid=${src.oldid}&action=raw`, UA);
+    if (res.ok) writeFileSync(path, await res.text());
+    await sleep(800);
+  }
   if (!existsSync(path)) {
     for (const t of [src.title, ...(src.altTitles ?? [])]) {
       const body = await fetchRaw(t);

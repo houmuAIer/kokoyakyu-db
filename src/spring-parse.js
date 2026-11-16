@@ -40,7 +40,9 @@ const cellBody = (c) => c.replace(/^\s*(?:(?:rowspan|colspan|style|align|bgcolor
 export const schoolKey = (s) => strip(s)
   .replace(/[★☆*＊]/g, '').replace(/[（(][^）)]*[）)]/g, '')
   .replace(/\s+/g, '').replace(/高等学校$|高校$|高$/, '')
-  .replace(/辯/g, '弁').replace(/ヶ/g, 'ケ').replace(/[Ａ-Ｚａ-ｚ０-９]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xfee0));
+  .replace(/工業$/, '工').replace(/商業$/, '商').replace(/農業$/, '農').replace(/実業$/, '実')
+  .replace(/慶應義塾|慶応義塾|慶應/g, '慶応').replace(/^専修大/, '専大').replace(/大学附属|大学付属|大附属|大付属|大附/g, '大付')
+  .replace(/第([一二三])/g, '$1').replace(/辯/g, '弁').replace(/ヶ/g, 'ケ').replace(/[Ａ-Ｚａ-ｚ０-９]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xfee0));
 const SCORE = /^\d+x?\s*[-－–]\s*\d+x?/;
 
 /**
@@ -75,7 +77,7 @@ export function parseRegionalPage(text, region) {
       continue;
     }
     if (cells.some((c) => /春季/.test(c))) continue;
-    const i = cells.findIndex((c) => SCORE.test(strip(c)));
+    const i = cells.findIndex((c) => SCORE.test(strip(c).replace(/[０-９]/g, (d) => String.fromCharCode(d.charCodeAt(0) - 0xfee0))));
     if (i < 1 || i + 1 >= cells.length) continue;
     const semis = hasSemis ? cells.slice(i + 2, i + 4).map(schoolKey).filter(Boolean) : [];
     out.push({ year, region: tableRegion, champion: schoolKey(cells[i - 1]), runnerUp: schoolKey(cells[i + 1]), semis });

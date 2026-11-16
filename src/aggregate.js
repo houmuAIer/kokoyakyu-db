@@ -182,7 +182,7 @@ export function schoolHistory(db, { schoolId, ...filter }) {
         if (g.tournamentId !== e.tournamentId || g.type !== 'normal' || (g.a !== schoolId && g.b !== schoolId)) continue;
         g.winner === schoolId ? wins++ : losses++;
       }
-      return { tournament: t, nameAtTime: e.nameAtTime, slot: e.slot, result, wins, losses, selection: e.selection ?? null, regional: e.regionalResult ? { region: e.regionalRegion, result: e.regionalResult } : null };
+      return { tournament: t, nameAtTime: e.nameAtTime, slot: e.slot, result, wins, losses, selection: e.selection ?? null, regional: e.regionalResult ? { region: e.regionalRegion, result: e.regionalResult, source: e.regionalSource ?? '' } : null, pref: e.prefResult ?? null };
     })
     .sort((x, y) => y.tournament.year - x.tournament.year || (y.tournament.season === 'summer') - (x.tournament.season === 'summer'));
 }
