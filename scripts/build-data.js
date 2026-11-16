@@ -9,6 +9,7 @@ const { db, errors } = buildDb({
   entriesCsv: read('data/entries.csv'),
   gamesCsv: read('data/games.csv'),
   draftsCsv: read('data/drafts.csv'),
+  springExtraCsv: read('data/spring-extra.csv'),
   districts: JSON.parse(read('config/districts.json')),
   eras: JSON.parse(read('config/eras.json')),
 });
@@ -20,7 +21,7 @@ if (errors.length) {
 const short = new Map(db.schools.map((sc, i) => [sc.id, `s${i.toString(36)}`]));
 const S = (id) => (id ? short.get(id) : id);
 db.schools = db.schools.map((sc) => ({ ...sc, article: sc.id, id: S(sc.id) }));
-db.entries = db.entries.map((e) => ({ ...e, schoolId: S(e.schoolId) }));
+db.entries = db.entries.map((e) => ({ ...e, schoolId: S(e.schoolId), selection: e.selection === '一般' ? undefined : e.selection }));
 db.games = db.games.map((g) => ({ ...g, a: S(g.a), b: S(g.b), winner: S(g.winner) }));
 // ドラフトは球団名を番号にして小さくする（teams に一覧）
 db.draftTeams = [...new Set(db.drafts.map((d) => d.team))];

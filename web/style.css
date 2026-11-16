@@ -170,3 +170,4 @@ td .circled { display: inline-block; min-width: 1.9em; padding: 1px 7px; border-
 .draft-gen.later.open { background: var(--ink); color: #fff; }
 .gen-head { margin-top: 6px; font-weight: 700; }
 .gen-none { margin: 0 0 0 1.2em; color: var(--ink-soft); }
+.sel-tag { display: inline-block; margin-right: 6px; padding: 0 6px; border-radius: 4px; background: #e8f0e1; color: #2f6b1f; font-size: .75rem; font-weight: 700; }

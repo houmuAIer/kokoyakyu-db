@@ -9,7 +9,7 @@ const DRAFT_STATUS = ['signed', 'declined', 'canceled', 'unknown'];
 
 const int = (v) => (v === '' ? null : Number.parseInt(v, 10));
 
-export function buildDb({ tournamentsCsv, schoolsCsv, entriesCsv, gamesCsv, draftsCsv = '', districts, eras }) {
+export function buildDb({ tournamentsCsv, schoolsCsv, entriesCsv, gamesCsv, draftsCsv = '', springExtraCsv = '', districts, eras }) {
   const errors = [];
   const err = (m) => errors.push(m);
 
@@ -77,6 +77,16 @@ export function buildDb({ tournamentsCsv, schoolsCsv, entriesCsv, gamesCsv, draf
       }
     }
     if (g.replayOf && !games.some((x) => x.id === g.replayOf && x.type === 'draw')) err(`試合${g.id}: replay_ofが引き分け試合を指していない`);
+  }
+  // センバツの選考区分と前年秋の地区大会の成績（spring-extra.csv）
+  const entryByKey = new Map(entries.map((e) => [`${e.tournamentId}|${e.schoolId}`, e]));
+  for (const x of springExtraCsv ? parseCsv(springExtraCsv) : []) {
+    const e = entryByKey.get(`${x.tournament_id}|${x.school_id}`);
+    if (!e) { err(`spring-extra: 出場がない ${x.tournament_id}|${x.school_id}`); continue; }
+    if (!['一般', '21世紀枠', '希望枠'].includes(x.selection)) err(`spring-extra: 区分不正 ${x.selection}`);
+    if (x.result && !['優勝', '準優勝', '4強', '8強', '出場'].includes(x.result)) err(`spring-extra: 成績不正 ${x.result}`);
+    e.selection = x.selection;
+    if (x.result) { e.regionalRegion = x.region; e.regionalResult = x.result; }
   }
   for (const d of drafts) {
     const tag = `ドラフト${d.year} ${d.player}`;

@@ -83,6 +83,15 @@ function gameRows(games, selfKeyFn) {
   }).join('');
 }
 
+/** センバツの選考：21世紀枠・希望枠と、前年秋の地区大会の成績（分かるものだけ） */
+function selCell(h) {
+  if (h.tournament.season !== 'spring') return '';
+  const tag = h.selection ? `<span class="sel-tag">${esc(h.selection)}</span>` : '';
+  const reg = h.regional ? `${esc(h.regional.region)}大会 ${esc(h.regional.result)}` : '<span class="subtle" title="前年秋の地区大会の成績が分かっていない">—</span>';
+  return `${tag}${reg}`;
+}
+const SEL_NOTE = '<p class="note">「選考（春）」は、センバツの選考区分（21世紀枠・希望枠）と前年秋の地区大会の成績です。地区大会の成績は Wikipedia の地区大会の記事から取った優勝・準優勝（東海・近畿・四国はベスト4まで。関東は優勝のみ）で、ベスト4・ベスト8などは順次追加中です。「—」は未確認。</p>';
+
 /** 当時の校名で、学校ページへのリンク */
 const schoolLink = (tid, sid) => `<button class="link quiet" data-school="${esc(sid)}">${esc(entryName(tid, sid))}</button>`;
 
@@ -196,6 +205,7 @@ function viewSchool() {
   const drafts = schoolDrafts(db, { schoolId: s.id, ...f });
   const genCell = (h) => { const g = draftGeneration(db, h.tournament.id, s.id); return g ? `${g.count}${g.partial ? '+' : ''}・${g.laterCount}${g.laterPartial ? '+' : ''}` : '—'; };
   const nHs = drafts.filter((d) => d.route === 'hs').length;
+  const hasSpring = hist.some((h) => h.tournament.season === 'spring');
   const stat = (k, v) => `<div><dt>${k}</dt><dd>${v}</dd></div>`;
   const tag = (r) => (r === '優勝' ? 'circled' : r === '準優勝' ? 'result-runner' : 'result-plain');
   return `<div class="controls">
@@ -206,8 +216,8 @@ function viewSchool() {
       <datalist id="school-list">${keys.map(([, l]) => `<option value="${esc(l)}">`).join('')}</datalist></div>
     <div class="ledger"><div class="ledger-title"><h2>${esc(s.name)}</h2><span class="aside">${esc(s.prefecture)}（${esc(db.districts[s.prefecture])}地区）</span></div>
       ${sum ? `<dl class="tally">${stat('出場', sum.appearances)}${stat('勝敗', `${sum.wins}-${sum.losses}`)}${stat('勝率', pct(sum.winRate))}${stat('ベスト8', sum.best8)}${stat('ベスト4', sum.best4)}${stat('準優勝', sum.runnerUp)}${stat('優勝', sum.champion)}${stat('高卒指名', nHs)}${stat('大社指名', drafts.length - nHs)}</dl>` : '<p class="empty">この条件での出場はありません。期間や大会を広げてください。</p>'}
-      ${hist.length ? `<h3>出場履歴</h3><div class="table-wrap"><table><thead><tr><th class="name">大会</th><th class="name">当時の校名</th><th class="name">代表枠</th><th>成績</th><th>勝敗</th><th>在籍の指名<br><span class="subtle">高卒・大社</span></th></tr></thead><tbody>
-        ${hist.map((h) => `<tr><td class="name">${h.tournament.year} ${SEASON[h.tournament.season]}${h.tournament.edition ? `<span class="subtle">第${h.tournament.edition}回</span>` : ''}</td><td class="name">${esc(h.nameAtTime)}</td><td class="name">${esc(h.slot)}</td><td><span class="${tag(h.result)}">${esc(h.result)}</span></td><td>${h.wins}-${h.losses}</td><td>${genCell(h)}</td></tr>`).join('')}
+      ${hist.length ? `<h3>出場履歴</h3>${hasSpring ? SEL_NOTE : ''}<div class="table-wrap"><table><thead><tr><th class="name">大会</th><th class="name">当時の校名</th><th class="name">代表枠</th><th>成績</th><th>勝敗</th><th class="name">選考（春）</th><th>在籍の指名<br><span class="subtle">高卒・大社</span></th></tr></thead><tbody>
+        ${hist.map((h) => `<tr><td class="name">${h.tournament.year} ${SEASON[h.tournament.season]}${h.tournament.edition ? `<span class="subtle">第${h.tournament.edition}回</span>` : ''}</td><td class="name">${esc(h.nameAtTime)}</td><td class="name">${esc(h.slot)}</td><td><span class="${tag(h.result)}">${esc(h.result)}</span></td><td>${h.wins}-${h.losses}</td><td class="name">${selCell(h)}</td><td>${genCell(h)}</td></tr>`).join('')}
       </tbody></table></div>` : ''}
       ${opp.length ? `<h3>対戦校別</h3><div class="table-wrap"><table><thead><tr><th class="name">対戦校</th><th>勝</th><th>敗</th><th>試合</th></tr></thead><tbody>
         ${opp.map((o) => `<tr><td class="name">${nameCell('school', o.key, o.label)}</td><td>${o.wins}</td><td>${o.losses}</td><td>${o.games.length}</td></tr>`).join('')}
