@@ -76,7 +76,7 @@
 | pref_result | 秋の都道府県大会の成績（21世紀枠のみ。例 `準優勝`・`8強`） |
 | source | 出典（URL または Wikipedia の記事） |
 
-出典の優先順位：Wikipedia の地区大会の記事 → config/spring-regional.json（出典つきの地区大会の結果・学校ごとの成績）→ config/kyureki-regional.json（球歴.com の試合結果から起こした地区大会の成績）。
+出典の優先順位：Wikipedia の地区大会の記事 → config/spring-regional.json（出典つきの地区大会の結果・学校ごとの成績）→ config/kyureki-regional.json（球歴.com の試合結果から起こした地区大会の成績。scripts/import-kyureki.js）→ config/xrea-regional.json（個人サイト「高校野球 秋の地区大会成績」の全試合スコアから起こした成績。主に2001年秋以前。scripts/import-xrea.js）。
 
 ## 集計ルール
 

@@ -11,7 +11,7 @@ const int = (v) => (v === '' ? null : Number.parseInt(v, 10));
 
 /** 出典の短い表示名（spring-extra.csv の source から） */
 const sourceLabel = (src = '') => (/kyureki/.test(src) ? '球歴.com' : /yumetaku/.test(src) ? '夢託備忘録' : /baseball-station/.test(src) ? 'ベースボールステーション'
-  : /kanaloco/.test(src) ? '神奈川新聞' : /Wikipedia/.test(src) ? 'Wikipedia' : src ? 'その他' : '');
+  : /kanaloco/.test(src) ? '神奈川新聞' : /xrea/.test(src) ? '高校野球 秋の地区大会成績（個人サイト）' : /Wikipedia/.test(src) ? 'Wikipedia' : src ? 'その他' : '');
 
 export function buildDb({ tournamentsCsv, schoolsCsv, entriesCsv, gamesCsv, draftsCsv = '', springExtraCsv = '', districts, eras }) {
   const errors = [];
