@@ -32,6 +32,7 @@ const state = {
   h2h: { level: 'prefecture', a: null, b: '' },
   school: null,
   debutTeams: '49',
+  schoolPref: '', schoolOrder: 'name', // 学校タブの一覧：都道府県の絞り込みと並び（校名順・出場数順）
   genOpen: null, // 世代のドラフト指名を開いている「試合ID|大会ID|学校ID」
   draftRank: { mode: 'generation', level: 'school', metric: 'total', genMetric: 'total' },
 };
@@ -110,7 +111,9 @@ function genDetail(tid, sid) {
     <div class="gen-head">高校から指名${more(g.partial, '下級生はこれからのドラフトで増える可能性があります')}</div>${list(g.picks, false)}
     <div class="gen-head">大学・社会人などを経て指名${more(g.laterPartial, '大学経由などでこれから増える可能性があります')}</div>${list(g.laterPicks, true)}`;
 }
-const GEN_NOTE = '<p class="note">「指名n」「大社n」は、その大会の時点でその学校に在籍していた、のちのドラフト指名選手の数です。「指名」は高校から直接、「大社」は大学・社会人・独立リーグなどを経ての指名（学年は生年月日から判定）。夏は1〜3年、春は新2・3年で、ベンチ入りかどうかは問いません。育成・入団拒否を含み、1965年以降のドラフトが対象。押すと内訳が出ます。「+」はこれから増える可能性がある大会です。</p>';
+const DRAFT_LATEST = Math.max(...db.drafts.map((d) => d.year));
+const LATEST_NOTE = `最新（${DRAFT_LATEST}年）のドラフトの大社経由は、Wikipediaに選手の記事ができるまで一部しか入っていません。`;
+const GEN_NOTE = `<p class="note">「指名n」「大社n」は、その大会の時点でその学校に在籍していた、のちのドラフト指名選手の数です。「指名」は高校から直接、「大社」は大学・社会人・独立リーグなどを経ての指名（学年は生年月日から判定）。夏は1〜3年、春は新2・3年で、ベンチ入りかどうかは問いません。育成・入団拒否を含み、1965年以降のドラフトが対象。押すと内訳が出ます。「+」はこれから増える可能性がある大会です。${LATEST_NOTE}</p>`;
 
 const entryName = (tid, sid) => entryIdx.get(`${tid}|${sid}`)?.nameAtTime ?? schoolById.get(sid).name;
 const gamesTable = (rowsHtml) => `<div class="table-wrap"><table><thead><tr><th class="name">大会</th><th class="name">回戦</th><th class="name">学校</th><th></th><th>スコア</th><th class="name">相手</th></tr></thead><tbody>${rowsHtml}</tbody></table></div>`;
@@ -168,10 +171,23 @@ function viewH2H() {
     </div>${content}`;
 }
 
+/** 学校タブの一覧（都道府県で絞り、校名順か出場数順。出場数は戦後通算の延べ出場） */
+const totalApps = new Map();
+for (const e of db.entries) totalApps.set(e.schoolId, (totalApps.get(e.schoolId) ?? 0) + 1);
+function schoolOptions() {
+  const list = db.schools.filter((x) => !state.schoolPref || x.prefecture === state.schoolPref);
+  const byName = (a, b) => a.name.localeCompare(b.name, 'ja');
+  list.sort(state.schoolOrder === 'apps'
+    ? (a, b) => (totalApps.get(b.id) ?? 0) - (totalApps.get(a.id) ?? 0) || byName(a, b)
+    : (a, b) => (state.schoolPref ? 0 : PREF_ORDER.indexOf(a.prefecture) - PREF_ORDER.indexOf(b.prefecture)) || byName(a, b));
+  return list.map((x) => [x.id, `${x.name}（${x.prefecture}${state.schoolOrder === 'apps' ? `・${totalApps.get(x.id) ?? 0}回` : ''}）`]);
+}
+
 function viewSchool() {
   const keys = keysFor('school');
   if (!state.school) state.school = keys[0]?.[0];
   const s = schoolById.get(state.school);
+  if (state.schoolPref && s.prefecture !== state.schoolPref) state.schoolPref = s.prefecture; // リンクで他県の学校に移ったときは一覧もその県に
   const f = filter();
   const sum = aggregate(db, { level: 'school', ...f }).find((r) => r.key === s.id);
   const hist = schoolHistory(db, { schoolId: s.id, ...f });
@@ -182,7 +198,11 @@ function viewSchool() {
   const nHs = drafts.filter((d) => d.route === 'hs').length;
   const stat = (k, v) => `<div><dt>${k}</dt><dd>${v}</dd></div>`;
   const tag = (r) => (r === '優勝' ? 'circled' : r === '準優勝' ? 'result-runner' : 'result-plain');
-  return `<div class="controls"><label>学校 <input list="school-list" id="school-input" placeholder="校名で検索" value="${esc(`${s.name}（${s.prefecture}）`)}"></label>
+  return `<div class="controls">
+      <label>都道府県 <select id="school-pref"><option value="">すべて</option>${PREF_ORDER.filter((p) => db.schools.some((x) => x.prefecture === p)).map((p) => `<option value="${esc(p)}" ${p === state.schoolPref ? 'selected' : ''}>${esc(p)}</option>`).join('')}</select></label>
+      <label>並び <select id="school-order"><option value="name" ${state.schoolOrder === 'name' ? 'selected' : ''}>校名順</option><option value="apps" ${state.schoolOrder === 'apps' ? 'selected' : ''}>出場数順</option></select></label>
+      <label>学校 <select id="school-select">${schoolOptions().map(([k, l]) => `<option value="${esc(k)}" ${k === s.id ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select></label>
+      <label>検索 <input list="school-list" id="school-input" placeholder="校名で検索"></label>
       <datalist id="school-list">${keys.map(([, l]) => `<option value="${esc(l)}">`).join('')}</datalist></div>
     <div class="ledger"><div class="ledger-title"><h2>${esc(s.name)}</h2><span class="aside">${esc(s.prefecture)}（${esc(db.districts[s.prefecture])}地区）</span></div>
       ${sum ? `<dl class="tally">${stat('出場', sum.appearances)}${stat('勝敗', `${sum.wins}-${sum.losses}`)}${stat('勝率', pct(sum.winRate))}${stat('ベスト8', sum.best8)}${stat('ベスト4', sum.best4)}${stat('準優勝', sum.runnerUp)}${stat('優勝', sum.champion)}${stat('高卒指名', nHs)}${stat('大社指名', drafts.length - nHs)}</dl>` : '<p class="empty">この条件での出場はありません。期間や大会を広げてください。</p>'}
@@ -221,7 +241,7 @@ function viewGenerationRank() {
       ${open ? `<tr class="gen-detail"><td colspan="8">${genDetail(r.tournament.id, r.schoolId)}</td></tr>` : ''}`;
   }).join('');
   const head = GEN_METRICS.map(([k, l]) => `<th class="sortable ${k === dr.genMetric ? 'active' : ''}" data-gen-metric="${k}">${l}</th>`).join('');
-  return `<p class="note">大会ごとに、その時点で在籍していた（夏は1〜3年、春は新2・3年）のちのドラフト指名選手の数です。ベンチ入りかどうかは問いません。「高卒」は高校から直接、「大社」は大学・社会人などを経ての指名。合計は入団拒否を含みます。「入団」は記事で入団が確認できる選手だけの数です（直近のドラフトで契約前の選手は入りません）。数字を押すと選手が出ます。「+」はこれから増える可能性がある大会です。1965年以降のドラフトが対象のため、1964年夏以前の大会は出ません。</p>
+  return `<p class="note">大会ごとに、その時点で在籍していた（夏は1〜3年、春は新2・3年）のちのドラフト指名選手の数です。ベンチ入りかどうかは問いません。「高卒」は高校から直接、「大社」は大学・社会人などを経ての指名。合計は入団拒否を含みます。「入団」は記事で入団が確認できる選手だけの数です（直近のドラフトで契約前の選手は入りません）。数字を押すと選手が出ます。「+」はこれから増える可能性がある大会です。1965年以降のドラフトが対象のため、1964年夏以前の大会は出ません。${LATEST_NOTE}</p>
     <div class="controls">
       <label>表示 <select id="draft-mode"><option value="generation" selected>同一世代（大会ごと）</option><option value="school">学校・県などの通算</option></select></label>
       <label>並び順 <select id="gen-metric">${GEN_METRICS.map(([k, l]) => `<option value="${k}" ${k === dr.genMetric ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
@@ -242,7 +262,7 @@ function viewDraftRank() {
     return `<tr><td class="rank">${rk}</td><td class="name">${nameCell(dr.level, r.key, r.label)}</td>${DRAFT_METRICS.map(([k]) => `<td>${r[k]}</td>`).join('')}</tr>`;
   }).join('');
   const head = DRAFT_METRICS.map(([k, l]) => `<th class="sortable ${k === dr.metric ? 'active' : ''}" data-draft-metric="${k}">${l}</th>`).join('');
-  return `<p class="note">期間内に行われたドラフト会議で指名された、甲子園出場校の出身者の数です（1965年以降。育成・入団拒否を含む）。「高卒」は高校から直接、「大社」は大学・社会人・独立リーグなどを経ての指名。「1位」は本指名の1位（自由獲得枠・希望枠は含まない）。期間は大会の年の範囲で数え、春夏の切り替えは関係しません。県・地区は学校の最新の出場時のものです。</p>
+  return `<p class="note">期間内に行われたドラフト会議で指名された、甲子園出場校の出身者の数です（1965年以降。育成・入団拒否を含む）。「高卒」は高校から直接、「大社」は大学・社会人・独立リーグなどを経ての指名。「1位」は本指名の1位（自由獲得枠・希望枠は含まない）。期間は大会の年の範囲で数え、春夏の切り替えは関係しません。県・地区は学校の最新の出場時のものです。${LATEST_NOTE}</p>
     <div class="controls">
       <label>表示 <select id="draft-mode"><option value="generation">同一世代（大会ごと）</option><option value="school" selected>学校・県などの通算</option></select></label>
       <label>集計単位 <select id="draft-level">${Object.entries(LEVELS).map(([k, l]) => `<option value="${k}" ${k === dr.level ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
@@ -321,6 +341,9 @@ view.addEventListener('change', (e) => {
   else if (id === 'draft-metric') state.draftRank.metric = v;
   else if (id === 'draft-mode') { state.draftRank.mode = v; state.genOpen = null; }
   else if (id === 'gen-metric') state.draftRank.genMetric = v;
+  else if (id === 'school-pref') { state.schoolPref = v; const first = schoolOptions()[0]; if (first) state.school = first[0]; }
+  else if (id === 'school-order') state.schoolOrder = v;
+  else if (id === 'school-select') state.school = v;
   else if (id === 'school-input') {
     const hit = keysFor('school').find(([, l]) => l === v) ?? keysFor('school').find(([, l]) => l.startsWith(v));
     if (hit) state.school = hit[0];
