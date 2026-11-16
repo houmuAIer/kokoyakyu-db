@@ -321,3 +321,28 @@ export function draftRanking(db, { level = 'school', ...filter } = {}) {
   }
   return [...rows.values()];
 }
+
+/**
+ * 同一世代のランキング用：絞り込んだ大会の出場ごとに、その時点で在籍していた、のちのドラフト指名選手を数える。
+ * ドラフトのデータより前の世代（3年生の高3の年が1965年より前）の出場は除く。
+ */
+export function generationRanking(db, filter = {}) {
+  const tSet = selectTournaments(db, filter);
+  const tMap = new Map(db.tournaments.map((t) => [t.id, t]));
+  const reach = stages(db, tSet);
+  const out = [];
+  for (const e of db.entries) {
+    if (!tSet.has(e.tournamentId)) continue;
+    const g = draftGeneration(db, e.tournamentId, e.schoolId);
+    if (!g) continue;
+    const st = reach.get(`${e.tournamentId}|${e.schoolId}`);
+    const result = !st ? '—' : st.round === ROUND_ORDER.F ? (st.champion ? '優勝' : '準優勝') : ROUND_LABEL[st.round];
+    const all = [...g.picks, ...g.laterPicks];
+    out.push({
+      tournament: tMap.get(e.tournamentId), schoolId: e.schoolId, nameAtTime: e.nameAtTime, prefecture: e.prefecture, result,
+      hs: g.count, later: g.laterCount, total: all.length, signed: all.filter((d) => (d.status ?? 'signed') === 'signed').length,
+      partial: g.partial || g.laterPartial,
+    });
+  }
+  return out;
+}

@@ -1,4 +1,4 @@
-import { aggregate, rank, opponents, headToHead, lastDebuts, fromYearForRecent, schoolHistory, draftGeneration, schoolDrafts, draftRanking } from './aggregate.js';
+import { aggregate, rank, opponents, headToHead, lastDebuts, fromYearForRecent, schoolHistory, draftGeneration, schoolDrafts, draftRanking, generationRanking } from './aggregate.js';
 
 const db = window.__DATA__ ?? await (await fetch('./data.json')).json();
 db.drafts = (db.drafts ?? []).map((d) => ({ ...d, kind: d.kind ?? 'regular', status: d.status ?? 'signed', route: d.route ?? 'hs', classYear: d.classYear ?? d.year, team: db.draftTeams[d.team] }));
@@ -33,7 +33,7 @@ const state = {
   school: null,
   debutTeams: '49',
   genOpen: null, // 世代のドラフト指名を開いている「試合ID|大会ID|学校ID」
-  draftRank: { level: 'school', metric: 'total' },
+  draftRank: { mode: 'generation', level: 'school', metric: 'total', genMetric: 'total' },
 };
 
 function filter() {
@@ -198,8 +198,38 @@ function viewSchool() {
 }
 
 const DRAFT_METRICS = [['total', '合計'], ['hs', '高卒'], ['later', '大社'], ['first', '1位'], ['development', '育成']];
+const GEN_METRICS = [['total', '合計'], ['hs', '高卒'], ['later', '大社'], ['signed', '入団']];
+const GEN_LIMIT = 100;
+function viewGenerationRank() {
+  const dr = state.draftRank;
+  const all = generationRanking(db, filter())
+    .sort((x, y) => y[dr.genMetric] - x[dr.genMetric] || y.total - x.total || y.signed - x.signed || y.tournament.year - x.tournament.year);
+  const rows = all.filter((r) => r[dr.genMetric] > 0);
+  let prev, prevRank = 0;
+  const tag = (r) => (r === '優勝' ? 'circled' : r === '準優勝' ? 'result-runner' : 'result-plain');
+  const body = rows.slice(0, GEN_LIMIT).map((r, i) => {
+    const v = r[dr.genMetric];
+    const rk = v === prev ? prevRank : i + 1;
+    prev = v; prevRank = rk;
+    const key = `entry|${r.tournament.id}|${r.schoolId}`;
+    const open = state.genOpen === key;
+    return `<tr><td class="rank">${rk}</td><td class="name">${r.tournament.year} ${SEASON[r.tournament.season]}</td>
+      <td class="name">${nameCell('school', r.schoolId, r.nameAtTime)}</td><td><span class="${tag(r.result)}">${esc(r.result)}</span></td>
+      <td><button class="draft-gen ${open ? 'open' : ''}" data-gen="${esc(key)}">${r.total}${r.partial ? '+' : ''}</button></td><td>${r.hs}</td><td>${r.later}</td><td>${r.signed}</td></tr>
+      ${open ? `<tr class="gen-detail"><td colspan="8">${genDetail(r.tournament.id, r.schoolId)}</td></tr>` : ''}`;
+  }).join('');
+  const head = GEN_METRICS.map(([k, l]) => `<th class="sortable ${k === dr.genMetric ? 'active' : ''}" data-gen-metric="${k}">${l}</th>`).join('');
+  return `<p class="note">大会ごとに、その時点で在籍していた（夏は1〜3年、春は新2・3年）のちのドラフト指名選手の数です。ベンチ入りかどうかは問いません。「高卒」は高校から直接、「大社」は大学・社会人などを経ての指名。合計は入団拒否を含みます。「入団」は記事で入団が確認できる選手だけの数です（直近のドラフトで契約前の選手は入りません）。数字を押すと選手が出ます。「+」はこれから増える可能性がある大会です。1965年以降のドラフトが対象のため、1964年夏以前の大会は出ません。</p>
+    <div class="controls">
+      <label>表示 <select id="draft-mode"><option value="generation" selected>同一世代（大会ごと）</option><option value="school">学校・県などの通算</option></select></label>
+      <label>並び順 <select id="gen-metric">${GEN_METRICS.map(([k, l]) => `<option value="${k}" ${k === dr.genMetric ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
+    </div>
+    <div class="ledger">${body ? `<div class="ledger-title"><h2>同一世代のプロ入り</h2><span class="aside">${rows.length > GEN_LIMIT ? `上位${GEN_LIMIT}件／` : ''}${rows.length}件</span></div><div class="table-wrap"><table><thead><tr><th class="rank">順位</th><th class="name">大会</th><th class="name">学校</th><th>成績</th>${head}</tr></thead><tbody>${body}</tbody></table></div>` : '<p class="empty">この条件に当てはまる大会はありません。</p>'}</div>`;
+}
+
 function viewDraftRank() {
   const dr = state.draftRank;
+  if (dr.mode === 'generation') return viewGenerationRank();
   const rows = draftRanking(db, { level: dr.level, ...filter() })
     .sort((x, y) => y[dr.metric] - x[dr.metric] || y.total - x.total || y.first - x.first);
   let prev, prevRank = 0;
@@ -212,6 +242,7 @@ function viewDraftRank() {
   const head = DRAFT_METRICS.map(([k, l]) => `<th class="sortable ${k === dr.metric ? 'active' : ''}" data-draft-metric="${k}">${l}</th>`).join('');
   return `<p class="note">期間内に行われたドラフト会議で指名された、甲子園出場校の出身者の数です（1965年以降。育成・入団拒否を含む）。「高卒」は高校から直接、「大社」は大学・社会人・独立リーグなどを経ての指名。「1位」は本指名の1位（自由獲得枠・希望枠は含まない）。期間は大会の年の範囲で数え、春夏の切り替えは関係しません。県・地区は学校の最新の出場時のものです。</p>
     <div class="controls">
+      <label>表示 <select id="draft-mode"><option value="generation">同一世代（大会ごと）</option><option value="school" selected>学校・県などの通算</option></select></label>
       <label>集計単位 <select id="draft-level">${Object.entries(LEVELS).map(([k, l]) => `<option value="${k}" ${k === dr.level ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
       <label>並び順 <select id="draft-metric">${DRAFT_METRICS.map(([k, l]) => `<option value="${k}" ${k === dr.metric ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
     </div>
@@ -286,6 +317,8 @@ view.addEventListener('change', (e) => {
   else if (id === 'debut-teams') state.debutTeams = v;
   else if (id === 'draft-level') state.draftRank.level = v;
   else if (id === 'draft-metric') state.draftRank.metric = v;
+  else if (id === 'draft-mode') { state.draftRank.mode = v; state.genOpen = null; }
+  else if (id === 'gen-metric') state.draftRank.genMetric = v;
   else if (id === 'school-input') {
     const hit = keysFor('school').find(([, l]) => l === v) ?? keysFor('school').find(([, l]) => l.startsWith(v));
     if (hit) state.school = hit[0];
@@ -293,10 +326,11 @@ view.addEventListener('change', (e) => {
   render();
 });
 view.addEventListener('click', (e) => {
-  const t = e.target.closest('[data-metric],[data-draft-metric],[data-school],[data-h2h-a],[data-h2h-b],[data-gen]');
+  const t = e.target.closest('[data-metric],[data-draft-metric],[data-gen-metric],[data-school],[data-h2h-a],[data-h2h-b],[data-gen]');
   if (!t) return;
   const d = t.dataset;
   if (d.draftMetric) state.draftRank.metric = d.draftMetric;
+  else if (d.genMetric) state.draftRank.genMetric = d.genMetric;
   else if (d.gen) state.genOpen = state.genOpen === d.gen ? null : d.gen;
   else if (d.metric) state.metric = d.metric;
   else if (d.school) { state.school = d.school; state.tab = 'school'; window.scrollTo(0, 0); }

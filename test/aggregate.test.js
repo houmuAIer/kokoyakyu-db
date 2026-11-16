@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { buildDb } from '../src/build.js';
-import { aggregate, rank, opponents, headToHead, debutOrder, debutStats, lastDebuts, fromYearForRecent, selectTournaments, schoolHistory, draftGeneration, schoolDrafts, generationYears, draftRanking } from '../src/aggregate.js';
+import { aggregate, rank, opponents, headToHead, debutOrder, debutStats, lastDebuts, fromYearForRecent, selectTournaments, schoolHistory, draftGeneration, schoolDrafts, generationYears, draftRanking, generationRanking } from '../src/aggregate.js';
 
 const read = (p) => readFileSync(new URL(`../${p}`, import.meta.url), 'utf8');
 const { db, errors } = buildDb({
@@ -181,4 +181,13 @@ test('指名数ランキングは期間（大会の年の範囲）に行われ�
   assert.equal(by(draftRanking(db, { level: 'prefecture' }))['大阪'].total, 2);
   assert.deepEqual(by(draftRanking(db, { level: 'school', fromYear: 2025 })).S06.hs, 1);
   assert.deepEqual(schoolDrafts(db, { schoolId: 'S06', fromYear: 2025 }).map((d) => d.player), ['鈴木二郎']);
+});
+
+test('同一世代ランキング：出場ごとに在籍していた指名選手（入団は拒否を除く）', () => {
+  const rows = generationRanking(db);
+  const r = rows.find((x) => x.tournament.id === '2025N' && x.schoolId === 'S06');
+  assert.deepEqual(pick(r, 'total', 'hs', 'later', 'signed'), { total: 4, hs: 3, later: 1, signed: 3 }); // 鈴木二郎は拒否
+  assert.equal(r.result, schoolHistory(db, { schoolId: 'S06' }).find((h) => h.tournament.id === '2025N').result);
+  assert.equal(rows.find((x) => x.tournament.id === '2024S' && x.schoolId === 'S06').total, 3);
+  assert.ok(!rows.some((x) => x.tournament.season === 'exchange'));
 });
